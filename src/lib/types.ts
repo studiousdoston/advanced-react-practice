@@ -10,7 +10,8 @@ export type Action =
   | { type: "dataFailed" }
   | { type: "start" }
   | { type: "newAnswer"; payload: number }
-  | { type: "nextQuestion" };
+  | { type: "nextQuestion" }
+  | { type: "finish" };
 
 export type State = {
   questions: Questions[];
@@ -18,4 +19,5 @@ export type State = {
   index: number;
   answer: null | number;
   points: number;
+  highscore: number;
 };
