@@ -1,45 +1,37 @@
 import { useEffect, useReducer } from "react";
-import Header from "./Header";
-import Main from "./Main";
-
-type Questions = {
-  question: string;
-  options: string[];
-  correctOption: number;
-  points: number;
-};
-type State = {
-  questions: Questions[];
-  status: string;
-};
-type Action = {
-  type: string;
-  payload?: Questions[];
-};
+import Header from "./components/Header";
+import Main from "./components/Main";
+import Loader from "./components/Loader";
+import Error from "./components/Error";
+import StartScreen from "./StartScreen";
+import Question from "./components/Question";
+import { Action, State } from "./lib/types";
 
 const initialState = {
   questions: [],
   status: "loading", // loading, error, ready, active, finished
+  index: 0,
 };
 
 function reducer(state: State, action: Action): State {
-  console.log("state:", state, "action:", action);
-
   switch (action.type) {
     case "dataReceived":
       return { ...state, questions: action.payload!, status: "ready" };
     case "dataFailed":
       return { ...state, status: "error" };
+    case "start":
+      return { ...state, status: "active" };
 
     default:
-      throw new Error("Unknown error");
+      return state;
   }
-} 
+}
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { questions, status } = state;
+  const { questions, status, index } = state;
 
+  const numQuestions = questions.length;
   useEffect(() => {
     fetch("http://localhost:8010/questions")
       .then((res) => res.json())
@@ -50,8 +42,12 @@ export default function App() {
     <div className="app">
       <Header />
       <Main>
-        <p>1/15</p>
-        <p>Question?</p>
+        {status === "loading" && <Loader />}
+        {status === "error" && <Error />}
+        {status === "ready" && (
+          <StartScreen numQuestions={numQuestions} dispatch={dispatch} />
+        )}
+        {status === "active" && <Question question={questions[index]} />}
       </Main>
     </div>
   );
