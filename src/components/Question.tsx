@@ -1,15 +1,24 @@
 import Options from "./Options";
-import { Questions } from "../lib/types";
+import { Action, Questions } from "../lib/types";
+import { Dispatch } from "react";
 
 type QuestionProps = {
   question: Questions;
+  dispatch: Dispatch<Action>;
+  answer: null | number;
 };
+
 export default function Question(props: QuestionProps) {
-  const { question } = props;
+  const { question, dispatch, answer } = props;
+  console.log(question);
   return (
     <div>
       <h4>{question.question}</h4>
-      <Options question={question} />
+      <Options 
+        question={question} 
+        dispatch={dispatch} 
+        answer={answer} 
+      />
     </div>
   );
 }
