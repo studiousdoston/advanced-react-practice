@@ -11,7 +11,9 @@ export type Action =
   | { type: "start" }
   | { type: "newAnswer"; payload: number }
   | { type: "nextQuestion" }
-  | { type: "finish" };
+  | { type: "finish" }
+  | { type: "restart" }
+  | { type: "tick" };
 
 export type State = {
   questions: Questions[];
@@ -20,4 +22,5 @@ export type State = {
   answer: null | number;
   points: number;
   highscore: number;
+  secondsRemaining: number | null;
 };
