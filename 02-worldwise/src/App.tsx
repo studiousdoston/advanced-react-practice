@@ -1,4 +1,4 @@
-import { BrowserRouter, Form, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import Product from "./pages/Product";
@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import CityList from "./components/CityList";
 import CountriesList from "./components/CountriesList";
 import City from "./components/City";
+import Form from "./components/Form";
 import type { City as CityType } from "./libs/common";
 
 const BASE_URL = "http://localhost:3090";
