@@ -12,3 +12,8 @@ export interface Position {
   lat: string;
   lng: string;
 }
+
+export interface Country {
+  country: string;
+  emoji: string;
+}
