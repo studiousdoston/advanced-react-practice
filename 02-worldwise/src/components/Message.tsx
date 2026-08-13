@@ -1,6 +1,9 @@
-import styles from "./Message.module.css";
+import styles from "../css/Message.module.css";
+type Props = {
+  message: string;
+};
 
-function Message({ message }) {
+function Message({ message }: Props) {
   return (
     <p className={styles.message}>
       <span role="img">👋</span> {message}
