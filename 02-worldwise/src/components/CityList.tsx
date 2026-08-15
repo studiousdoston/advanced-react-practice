@@ -1,15 +1,11 @@
+import { useCities } from "../contexts/CitiesContext";
 import styles from "../css/CityList.module.css";
-import { City } from "../libs/common";
 import CityItem from "./CityItem";
 import Message from "./Message";
 import Spinner from "./Spinner";
 
-type Props = {
-  cities: City[];
-  isLoading?: boolean;
-};
-export default function CityList(props: Props) {
-  const { cities, isLoading } = props;
+export default function CityList() {
+  const { cities, isLoading } = useCities();
   if (isLoading) return <Spinner />;
 
   if (!cities.length)
@@ -18,7 +14,7 @@ export default function CityList(props: Props) {
         message={"Add your first city by clicking on a city on the map"}
       />
     );
-    
+
   return (
     <ul className={styles.cityList}>
       {cities.map((city) => (
