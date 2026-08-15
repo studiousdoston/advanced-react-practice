@@ -1,9 +1,11 @@
 import { createContext, useContext } from "react";
-import type { City as CityType } from "../libs/common";
+import type { City, City as CityType } from "../libs/common";
 
 export type CitiesContextType = {
   cities: CityType[];
   isLoading: boolean;
+  currentCity: City;
+  getCity: (id: number) => void;
 };
 
 //* 1) CREATE THE CONTEXT
