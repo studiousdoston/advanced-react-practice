@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { CitiesContext } from "./CitiesContext";
 import { City, type City as CityType } from "../libs/common";
 
@@ -28,7 +28,7 @@ export function CitiesProvider({ children }: Props) {
     fetchCities();
   }, []);
 
-  async function getCity(id: number) {
+  const getCity = useCallback(async function getCity(id: number) {
     try {
       const res = await fetch(`${BASE_URL}/cities/${id}`);
       const data = await res.json();
@@ -38,7 +38,7 @@ export function CitiesProvider({ children }: Props) {
     } finally {
       setIsLoading(false);
     }
-  }
+  }, []);
 
   return (
     <CitiesContext.Provider
