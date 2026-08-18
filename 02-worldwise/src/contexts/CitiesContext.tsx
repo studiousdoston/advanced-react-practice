@@ -6,6 +6,7 @@ export type CitiesContextType = {
   isLoading: boolean;
   currentCity: City;
   getCity: (id: number) => void;
+  createCity: (city: City) => void;
 };
 
 //* 1) CREATE THE CONTEXT

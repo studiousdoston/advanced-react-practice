@@ -30,19 +30,45 @@ export function CitiesProvider({ children }: Props) {
 
   const getCity = useCallback(async function getCity(id: number) {
     try {
+      setIsLoading(true);
       const res = await fetch(`${BASE_URL}/cities/${id}`);
       const data = await res.json();
       setCurrentCity(data as City);
     } catch (err) {
-      console.log("ERROR ->", err);
+      alert("There was an error loading data...");
     } finally {
       setIsLoading(false);
     }
   }, []);
 
+  const createCity = async (newCity: City) => {
+    try {
+      setIsLoading(true);
+      const res = await fetch(`${BASE_URL}/cities`, {
+        method: "POST",
+        body: JSON.stringify(newCity),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      setCities((cities) => [...cities, data]);
+    } catch (err) {
+      alert("There was an error creating city!");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <CitiesContext.Provider
-      value={{ cities, isLoading, currentCity: currentCity as City, getCity }}
+      value={{
+        cities,
+        isLoading,
+        currentCity: currentCity as City,
+        getCity,
+        createCity,
+      }}
     >
       {children}
     </CitiesContext.Provider>

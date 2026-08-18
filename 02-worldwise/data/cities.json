@@ -10,7 +10,7 @@
         "lat": 38.727881642324164,
         "lng": -9.140900099907554
       },
-      "id": 73930385
+      "id": "73930385"
     },
     {
       "cityName": "Madrid",
@@ -22,7 +22,7 @@
         "lat": 40.46635901755316,
         "lng": -3.7133789062500004
       },
-      "id": 17806751
+      "id": "17806751"
     },
     {
       "cityName": "Berlin",
@@ -34,7 +34,7 @@
         "lat": 52.53586782505711,
         "lng": 13.376933665713324
       },
-      "id": 98443197
+      "id": "98443197"
     },
     {
       "cityName": "Istanbul",
@@ -46,7 +46,7 @@
         "lat": 41.0151,
         "lng": 28.9795
       },
-      "id": 23504526
+      "id": "23504526"
     },
     {
       "cityName": "Mecca",
@@ -58,7 +58,80 @@
         "lat": 21.4225,
         "lng": 39.8262
       },
-      "id": 235045453
+      "id": "235045453"
+    },
+    {
+      "cityName": "Busan",
+      "country": "Korea (the Republic of)",
+      "emoji": "🇰🇷",
+      "date": "2026-08-18T13:16:48.346Z",
+      "notes": "this is the city I live in\n",
+      "position": {
+        "lat": "35.156416187728475",
+        "lng": "128.9912256026254"
+      },
+      "id": "TylGgANrPPk"
+    },
+    {
+      "cityName": "Castel di Judica",
+      "country": "Italy",
+      "emoji": "🇮🇹",
+      "date": "2026-08-18T13:18:00.984Z",
+      "notes": "",
+      "position": {
+        "lat": "37.47564244374125",
+        "lng": "14.656381370867617"
+      },
+      "id": "CI2oSX1EID0"
+    },
+    {
+      "cityName": "Chirchiq",
+      "country": "Uzbekistan",
+      "emoji": "🇺🇿",
+      "date": "2022-01-22T13:19:04.000Z",
+      "notes": "Oh no, I don't want to be here 😢",
+      "position": {
+        "lat": "41.447241563295236",
+        "lng": "69.58238095424322"
+      },
+      "id": "s5vkV3DhZq0"
+    },
+    {
+      "cityName": "Jerusalem",
+      "country": "Palestine, State of",
+      "emoji": "🇵🇸",
+      "date": "2026-08-18T13:23:44.873Z",
+      "notes": "We will get our Al-Aqsa back, Insha'Allah!",
+      "position": {
+        "lat": "31.857882638668407",
+        "lng": "35.139894235326295"
+      },
+      "id": "xMveV4mI6wM"
+    },
+    {
+      "cityName": "Jeju City",
+      "country": "Korea (the Republic of)",
+      "emoji": "🇰🇷",
+      "date": "2026-08-18T13:26:35.410Z",
+      "notes": "",
+      "position": {
+        "lat": "33.44158014663476",
+        "lng": "126.50829906189047"
+      },
+      "id": "S_Rz4vLq8Fg"
+    },
+    {
+      "cityName": "Seoul",
+      "country": "Korea (the Republic of)",
+      "emoji": "🇰🇷",
+      "date": "2026-08-18T13:27:22.926Z",
+      "notes": "",
+      "position": {
+        "lat": "37.5279892497015",
+        "lng": "127.02691412925164"
+      },
+      "id": "i2LT1JdpUy8"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

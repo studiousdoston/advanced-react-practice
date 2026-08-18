@@ -5,7 +5,7 @@ export interface City {
   emoji: string;
   notes: string;
   position: Position;
-  id: number;
+  id?: number;
 }
 
 export interface Position {
