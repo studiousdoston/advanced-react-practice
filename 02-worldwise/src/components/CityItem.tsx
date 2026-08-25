@@ -6,6 +6,7 @@ import { useCities } from "../contexts/CitiesContext";
 type Props = {
   city: City;
 };
+// eslint-disable-next-line react-refresh/only-export-components
 export const formatDate = (date: string | null) =>
   new Intl.DateTimeFormat("en", {
     day: "numeric",
@@ -15,8 +16,14 @@ export const formatDate = (date: string | null) =>
   }).format(new Date(date!));
 
 export default function CityItem({ city }: Props) {
-  const { currentCity } = useCities();
+  const { currentCity, deleteCity } = useCities();
   const { cityName, emoji, date, id, position } = city;
+
+  //* HANDLERS
+  const handleDelete = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    deleteCity(id!);
+  };
   return (
     <li>
       <Link
@@ -26,7 +33,9 @@ export default function CityItem({ city }: Props) {
         <span className={styles.emoji}>{emoji}</span>
         <h3 className={styles.name}>{cityName}</h3>
         <time className={styles.date}>({formatDate(date)})</time>
-        <button className={styles.deleteBtn}>&times;</button>
+        <button className={styles.deleteBtn} onClick={handleDelete}>
+          &times;
+        </button>
       </Link>
     </li>
   );
