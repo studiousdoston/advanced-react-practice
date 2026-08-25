@@ -73,16 +73,28 @@
       "id": "tYl0Fm3iiJ4"
     },
     {
-      "cityName": "Taygan",
-      "country": "Mongolia",
-      "emoji": "🇲🇳",
-      "date": "2026-08-22T13:09:05.238Z",
-      "notes": "",
+      "cityName": "Piskent Tumani",
+      "country": "Uzbekistan",
+      "emoji": "🇺🇿",
+      "date": "2026-08-25T10:11:46.615Z",
+      "notes": "Assalomu Alaikum",
       "position": {
-        "lat": "46.07323062540835",
-        "lng": "98.08593750000001"
+        "lat": "40.83745041598948",
+        "lng": "69.27978515625001"
       },
-      "id": "4Bywl9ZDwGA"
+      "id": "cWoAKWMdk9o"
+    },
+    {
+      "cityName": "Boutilimitt",
+      "country": "Mauritania",
+      "emoji": "🇲🇷",
+      "date": "2026-08-25T10:37:52.909Z",
+      "notes": "TEST",
+      "position": {
+        "lat": "18.396230138028827",
+        "lng": "-13.798828125000002"
+      },
+      "id": "3YXkn74oD3Q"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
