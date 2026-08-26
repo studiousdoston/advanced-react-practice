@@ -1,11 +1,11 @@
 import { createStore } from "redux";
 
+//* TYPES
 type State = {
   balance: number;
   loan: number;
   loanPurpose: string;
 };
-
 type Action =
   | { type: "account/deposit"; payload: number }
   | { type: "account/withdraw"; payload: number }
@@ -15,12 +15,14 @@ type Action =
     }
   | { type: "account/payLoan" };
 
+//* INITIAL_STATE
 const initialState: State = {
-  balance: 0, // 500   300   200
+  balance: 0,
   loan: 0,
   loanPurpose: "",
 };
 
+//* REDUCER
 function reducer(state = initialState, action: Action) {
   switch (action.type) {
     case "account/deposit":
@@ -50,17 +52,47 @@ function reducer(state = initialState, action: Action) {
   }
 }
 
+//* STORE
 const store = createStore(reducer);
 
-store.dispatch({ type: "account/deposit", payload: 500 });
-store.dispatch({ type: "account/withdraw", payload: 300 });
+//* DISPATCH ACTIONS
+// store.dispatch({ type: "account/deposit", payload: 500 });
+// store.dispatch({ type: "account/withdraw", payload: 300 });
+// console.log(store.getState());
+
+// store.dispatch({
+//   type: "account/requestLoan",
+//   payload: { amount: 5000, purpose: "To get married" },
+// });
+// console.log(store.getState());
+
+// store.dispatch({ type: "account/payLoan" });
+// console.log(store.getState());
+
+//* ACTION_CREATOR_FUNCTIONS
+function deposit(amount: number): Action {
+  return { type: "account/deposit", payload: amount };
+}
+function withdraw(amount: number): Action {
+  return { type: "account/withdraw", payload: amount };
+}
+function requestLoan(amount: number, purpose: string): Action {
+  return {
+    type: "account/requestLoan",
+    payload: { amount, purpose },
+  };
+}
+function payLoan(): Action {
+  return { type: "account/payLoan" };
+}
+
+//* DISPATCHING_ACTIONS <-> ACTION_CREATOR_FUNCTIONS
+store.dispatch(deposit(500));
+store.dispatch(withdraw(200));
 console.log(store.getState());
 
-store.dispatch({
-  type: "account/requestLoan",
-  payload: { amount: 5000, purpose: "To get married" },
-});
+store.dispatch(requestLoan(40000, "Buy a house"));
 console.log(store.getState());
 
-store.dispatch({ type: "account/payLoan" });
+store.dispatch(payLoan());
 console.log(store.getState());
