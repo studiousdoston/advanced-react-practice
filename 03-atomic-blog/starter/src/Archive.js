@@ -12,7 +12,7 @@ export function createRandomPost() {
 export default function Archive() {
   const { onAddPosts } = usePosts();
   const [posts] = useState(() =>
-    Array.from({ length: 500 }, () => createRandomPost()),
+    Array.from({ length: 30000 }, () => createRandomPost()),
   );
   const [showArchive, setShowArchive] = useState(false);
 
