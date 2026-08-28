@@ -2,14 +2,14 @@ import { useState } from "react";
 import { usePosts } from "./Context/PostContext";
 
 export default function FormAddPost() {
-  const { onAddPost } = usePosts();
+  const { onAddPosts } = usePosts();
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
 
   const handleSubmit = function (e) {
     e.preventDefault();
     if (!body || !title) return;
-    onAddPost({ title, body });
+    onAddPosts({ title, body });
     setTitle("");
     setBody("");
   };

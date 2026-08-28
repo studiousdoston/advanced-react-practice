@@ -10,7 +10,7 @@ export function createRandomPost() {
 }
 
 export default function Archive() {
-  const { onAddPost } = usePosts();
+  const { onAddPosts } = usePosts();
   const [posts] = useState(() =>
     Array.from({ length: 500 }, () => createRandomPost()),
   );
@@ -30,7 +30,7 @@ export default function Archive() {
               <p>
                 <strong>{post.title}:</strong> {post.body}
               </p>
-              <button onClick={() => onAddPost(post)}>Add as new post</button>
+              <button onClick={() => onAddPosts(post)}>Add as new post</button>
             </li>
           ))}
         </ul>
