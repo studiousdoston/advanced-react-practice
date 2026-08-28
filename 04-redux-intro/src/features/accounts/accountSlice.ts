@@ -1,4 +1,6 @@
+import { Dispatch } from "redux";
 import { AccountState, Action } from "../../libs/types/store.types";
+import { RootState } from "../../store";
 
 //* INITIAL_STATES
 const initialStateAccount: AccountState = {
@@ -40,10 +42,26 @@ export default function accountReducer(
   }
 }
 
-//* ACTION_CREATOR_FUNCTIONS
-export function deposit(amount: number): Action {
-  return { type: "account/deposit", payload: amount };
+//------------------------------------------------------------
+//*               ACTION_CREATOR_FUNCTIONS
+//------------------------------------------------------------
+export function deposit(
+  amount: number,
+  currency: string,
+): Action | ((dispatch: Dispatch, getState: () => RootState) => Promise<void>) {
+  if (currency === "USD") return { type: "account/deposit", payload: amount };
+  return async (dispatch: Dispatch, getState: () => RootState) => {
+    // API call
+    const res = await fetch(
+      `https://api.frankfurter.dev/v1/latest?amount=${amount}&from=${currency}&to=USD`,
+    );
+    const data = await res.json();
+    const convertedData = data.rates.USD;
+    //return action
+    dispatch({ type: "account/deposit", payload: convertedData });
+  };
 }
+
 export function withdraw(amount: number): Action {
   return { type: "account/withdraw", payload: amount };
 }

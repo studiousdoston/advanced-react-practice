@@ -28,7 +28,9 @@ export default function customerReducer(
   }
 }
 
-//* ACTION_CREATOR_FUNCTIONS
+//------------------------------------------------------------
+//*               ACTION_CREATOR_FUNCTIONS
+//------------------------------------------------------------
 export function createCustomer(fullName: string, nationalId: string): Action {
   return {
     type: "customer/createCustomer",
