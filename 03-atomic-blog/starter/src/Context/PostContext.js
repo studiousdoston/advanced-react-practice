@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 import { createRandomPost } from "../Archive";
 
 //* 1) CREATE A CONTEXT
@@ -28,19 +28,19 @@ function PostProvider({ children }) {
     setPosts([]);
   }
 
+  const value = useMemo(() => {
+    return {
+      posts: searchedPosts,
+      onAddPosts: handleAddPost,
+      onClearPosts: handleClearPosts,
+      searchQuery,
+      setSearchQuery,
+    };
+  }, [searchQuery, searchedPosts]);
+
   return (
     //* 2 PROVIDE VALUE TO CHILD COMPONENTS
-    <PostContext.Provider
-      value={{
-        posts: searchedPosts,
-        onAddPosts: handleAddPost,
-        onClearPosts: handleClearPosts,
-        searchQuery,
-        setSearchQuery,
-      }}
-    >
-      {children}
-    </PostContext.Provider>
+    <PostContext.Provider value={value}>{children}</PostContext.Provider>
   );
 }
 
