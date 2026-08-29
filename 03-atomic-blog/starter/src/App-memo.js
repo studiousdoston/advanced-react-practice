@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { faker } from "@faker-js/faker";
 
 function createRandomPost() {
@@ -25,15 +25,18 @@ function App() {
         )
       : posts;
 
-  function handleAddPost(post) {
+  // --------------------------------------------------------
+  //*                MEMOIZED  FUNCTION
+  // --------------------------------------------------------
+  const handleAddPost = useCallback(function handleAddPost(post) {
     setPosts((posts) => [post, ...posts]);
-  }
+  }, []);
+  // --------------------------------------------------------
 
   function handleClearPosts() {
     setPosts([]);
   }
 
-  // Whenever `isFakeDark` changes, we toggle the `fake-dark-mode` class on the HTML element (see in "Elements" dev tool).
   useEffect(
     function () {
       document.documentElement.classList.toggle("fake-dark-mode");
@@ -41,12 +44,16 @@ function App() {
     [isFakeDark],
   );
 
+  // --------------------------------------------------------
+  //*                 MEMOIZED  OBJECT
+  // --------------------------------------------------------
   const archiveOptions = useMemo(() => {
     return {
       show: false,
       title: `Post archive in addition to ${posts.length} main posts`,
     };
   }, [posts.length]);
+  // --------------------------------------------------------
 
   return (
     <section>
@@ -64,7 +71,7 @@ function App() {
         setSearchQuery={setSearchQuery}
       />
       <Main posts={searchedPosts} onAddPost={handleAddPost} />
-      <Archive archiveOptions={archiveOptions} />
+      <Archive archiveOptions={archiveOptions} onAddPost={handleAddPost} />
       <Footer />
     </section>
   );
@@ -164,7 +171,7 @@ function List({ posts }) {
 //*                 MEMOIZED  ARCHIVE
 // --------------------------------------------------------
 
-const Archive = memo(function Archive({ archiveOptions }) {
+const Archive = memo(function Archive({ archiveOptions, onAddPost }) {
   const [posts] = useState(() =>
     Array.from({ length: 30000 }, () => createRandomPost()),
   );
@@ -184,7 +191,7 @@ const Archive = memo(function Archive({ archiveOptions }) {
               <p>
                 <strong>{post.title}:</strong> {post.body}
               </p>
-              {/* <button onClick={() => onAddPost(post)}>Add as new post</button> */}
+              <button onClick={() => onAddPost(post)}>Add as new post</button>
             </li>
           ))}
         </ul>
