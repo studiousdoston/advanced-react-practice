@@ -1,6 +1,10 @@
+import { Pizza } from "@/types/cart.types";
 import { formatCurrency } from "@/utils/helpers";
 
-function MenuItem({ pizza }) {
+type MenuItemProps = {
+  pizza: Pizza;
+};
+function MenuItem({ pizza }: MenuItemProps) {
   const { name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
 
   return (
