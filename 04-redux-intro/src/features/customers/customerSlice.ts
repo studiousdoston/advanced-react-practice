@@ -6,7 +6,7 @@ const initialStateCustomer: CustomertState = {
   createdAt: "",
 };
 
-//* CUSTOMER_REDUCER
+//*         CUSTOMER_REDUCER
 export default function customerReducer(
   state = initialStateCustomer,
   action: Action,

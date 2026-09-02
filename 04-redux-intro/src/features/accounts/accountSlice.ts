@@ -2,14 +2,14 @@ import { Dispatch } from "redux";
 import { AccountState, Action } from "../../libs/types/store.types";
 import { RootState } from "../../store";
 
-//* INITIAL_STATES
+//*       INITIAL_STATES
 const initialStateAccount: AccountState = {
   balance: 0,
   loan: 0,
   loanPurpose: "",
 };
 
-//* ACCOUNT_REDUCER
+//*       ACCOUNT_REDUCER
 export default function accountReducer(
   state = initialStateAccount,
   action: Action,
@@ -45,12 +45,17 @@ export default function accountReducer(
 //------------------------------------------------------------
 //*               ACTION_CREATOR_FUNCTIONS
 //------------------------------------------------------------
+
+//*                  DEPOSIT
 export function deposit(
   amount: number,
   currency: string,
 ): Action | ((dispatch: Dispatch, getState: () => RootState) => Promise<void>) {
   if (currency === "USD") return { type: "account/deposit", payload: amount };
+
   return async (dispatch: Dispatch, getState: () => RootState) => {
+    dispatch({ type: "account/convertingCurrency" });
+
     // API call
     const res = await fetch(
       `https://api.frankfurter.dev/v1/latest?amount=${amount}&from=${currency}&to=USD`,
@@ -62,6 +67,7 @@ export function deposit(
   };
 }
 
+//*                  WITHDRAW
 export function withdraw(amount: number): Action {
   return { type: "account/withdraw", payload: amount };
 }
