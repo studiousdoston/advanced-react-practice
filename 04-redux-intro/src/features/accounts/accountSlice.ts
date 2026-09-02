@@ -55,25 +55,20 @@ const accountSlice = createSlice({
   },
 });
 
-console.log(accountSlice);
-
 export const { withdraw, requestLoan, payLoan } = accountSlice.actions;
 
-//*                  DEPOSIT
+//* DEPOSIT
 export function deposit(
   amount: number,
   currency: string,
-):
-  | Action
-  | ((dispatch: Dispatch<Action>, getState: () => RootState) => Promise<void>) {
+):Action | ((dispatch: Dispatch<Action>, getState: () => RootState) => Promise<void>) {
   if (currency === "USD") return { type: "account/deposit", payload: amount };
-
   return async (dispatch: Dispatch<Action>, getState: () => RootState) => {
     dispatch({ type: "account/convertingCurrency" });
 
     // API call
     const res = await fetch(
-      `https://api.frankfurter.dev/v1/latest?amount=${amount}&from=${currency}&to=USD`,
+      `https://api.frankfurter.dev/v1asyn/latest?amount=${amount}&from=${currency}&to=USD`,
     );
     const data = await res.json();
     const convertedData = data.rates.USD;

@@ -11,7 +11,6 @@ const rootReducer = combineReducers({
   customer: customerReducer,
 });
 */
-
 //*       STORE V-1
 /*
 const store = createStore(
