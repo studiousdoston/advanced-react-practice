@@ -1,5 +1,8 @@
-import { Dispatch } from "redux";
-import { AccountState, Action } from "../../libs/types/store.types";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Action } from "../../libs/types/store.types";
+
+import { AccountState } from "../../libs/types/store.types";
+import { Dispatch } from "react";
 import { RootState } from "../../store";
 
 //*       INITIAL_STATES
@@ -7,53 +10,65 @@ const initialStateAccount: AccountState = {
   balance: 0,
   loan: 0,
   loanPurpose: "",
+  isLoading: true,
 };
 
-//*       ACCOUNT_REDUCER
-export default function accountReducer(
-  state = initialStateAccount,
-  action: Action,
-) {
-  switch (action.type) {
-    case "account/deposit":
-      return { ...state, balance: state.balance + action.payload };
+const accountSlice = createSlice({
+  name: "account",
+  initialState: initialStateAccount,
+  reducers: {
+    deposit(state, action) {
+      state.balance += action.payload;
+      state.isLoading = false;
+    },
+    withdraw(state, action) {
+      state.balance -= action.payload;
+    },
 
-    case "account/withdraw":
-      return { ...state, balance: state.balance - action.payload };
+    requestLoan: {
+      prepare(amount, purpose) {
+        return {
+          payload: { amount, purpose },
+        };
+      },
 
-    case "account/requestLoan":
-      if (state.loan > 0) return state;
-      return {
-        ...state,
-        balance: state.balance + action.payload.amount,
-        loan: action.payload.amount,
-        loanPurpose: action.payload.purpose,
-      };
+      reducer(
+        state,
+        action: PayloadAction<{ amount: number; purpose: string }>,
+      ) {
+        if (state.loan > 0) return;
+        state.loan = action.payload.amount;
+        state.loanPurpose = action.payload.purpose;
+        state.balance = state.balance + action.payload.amount;
+      },
+    },
 
-    case "account/payLoan":
-      return {
-        ...state,
-        loan: 0,
-        loanPurpose: "",
-        balance: state.balance - state.loan,
-      };
-    default:
-      return state;
-  }
-}
+    payLoan(state) {
+      state.balance -= state.loan;
+      state.loan = 0;
+      state.loanPurpose = "";
+    },
 
-//------------------------------------------------------------
-//*               ACTION_CREATOR_FUNCTIONS
-//------------------------------------------------------------
+    convertingCurrency(state) {
+      state.isLoading = true;
+    },
+  },
+});
+
+console.log(accountSlice);
+
+export const { withdraw, requestLoan, payLoan } = accountSlice.actions;
 
 //*                  DEPOSIT
 export function deposit(
   amount: number,
   currency: string,
-): Action | ((dispatch: Dispatch, getState: () => RootState) => Promise<void>) {
+):
+  | Action
+  | ((dispatch: Dispatch<Action>, getState: () => RootState) => Promise<void>) {
   if (currency === "USD") return { type: "account/deposit", payload: amount };
 
-  return async (dispatch: Dispatch, getState: () => RootState) => {
+  return async (dispatch: Dispatch<Action>, getState: () => RootState) => {
     dispatch({ type: "account/convertingCurrency" });
 
     // API call
@@ -67,16 +82,4 @@ export function deposit(
   };
 }
 
-//*                  WITHDRAW
-export function withdraw(amount: number): Action {
-  return { type: "account/withdraw", payload: amount };
-}
-export function requestLoan(amount: number, purpose: string): Action {
-  return {
-    type: "account/requestLoan",
-    payload: { amount, purpose },
-  };
-}
-export function payLoan(): Action {
-  return { type: "account/payLoan" };
-}
+export default accountSlice.reducer;
