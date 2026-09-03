@@ -2,7 +2,17 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ["Roboto Mono", "monospace"],
+      },
+      fontSize: {
+        huge: ["10rem", { lineHeight: "1" }],
+      },
+      height: {
+        screen: "100dvh",
+      },
+    },
   },
   plugins: [],
 };

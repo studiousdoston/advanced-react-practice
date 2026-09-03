@@ -1,13 +1,13 @@
 // Test ID: IIDSAT
 import { pizzaApi } from "@/services/apiRestaurant";
-import type { Order } from "@/types/cart.types";
+import type { Order } from "@/types/types";
 import { calcMinutesLeft, formatCurrency, formatDate } from "@/utils/helpers";
 import { useLoaderData } from "react-router-dom";
 
 function Order() {
   const order = useLoaderData() as Order;
 
-  const { status,  priority, priorityPrice, orderPrice, estimatedDelivery } =
+  const { status, priority, priorityPrice, orderPrice, estimatedDelivery } =
     order;
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
 

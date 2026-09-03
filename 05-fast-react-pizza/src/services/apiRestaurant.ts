@@ -1,4 +1,4 @@
-import { MenuItem, Order, NewOrder } from "@/types/cart.types";
+import { MenuItem, Order, NewOrder } from "@/types/types";
 
 export class PizzaApiService {
   private baseUrl: string;

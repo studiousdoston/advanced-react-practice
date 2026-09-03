@@ -1,7 +1,7 @@
 import { pizzaApi } from "@/services/apiRestaurant";
 import { useLoaderData } from "react-router-dom";
 import MenuItem from "./MenuItem";
-import { Pizza } from "@/types/cart.types";
+import { Pizza } from "@/types/types";
 
 function Menu() {
   const menu = useLoaderData() as Pizza[];

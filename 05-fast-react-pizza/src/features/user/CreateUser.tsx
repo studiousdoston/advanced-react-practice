@@ -1,3 +1,5 @@
+import { inputStyles } from "@/types/types";
+import Button from "@/ui/Button";
 import React, { useState } from "react";
 
 function CreateUser() {
@@ -9,10 +11,13 @@ function CreateUser() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <p>👋 Welcome! Please start by telling us your name:</p>
+      <p className="mb-4 text-sm text-stone-600 md:text-base">
+        👋 Welcome! Please start by telling us your name:
+      </p>
 
       <input
         type="text"
+        className={`${inputStyles} mb-8 w-64`}
         placeholder="Your full name"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
@@ -20,7 +25,7 @@ function CreateUser() {
 
       {username !== "" && (
         <div>
-          <button>Start ordering</button>
+          <Button>Start ordering</Button>
         </div>
       )}
     </form>

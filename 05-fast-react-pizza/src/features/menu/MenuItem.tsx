@@ -1,4 +1,4 @@
-import { Pizza } from "@/types/cart.types";
+import { Pizza } from "@/types/types";
 import { formatCurrency } from "@/utils/helpers";
 
 type MenuItemProps = {

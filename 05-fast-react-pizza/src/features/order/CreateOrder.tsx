@@ -1,8 +1,8 @@
-// https://uibakery.io/regex-library/phone-number
+import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
 
 import { pizzaApi } from "@/services/apiRestaurant";
-import { Cart } from "@/types/cart.types";
-import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
+import { Cart, inputStyles } from "@/types/types";
+import Button from "@/ui/Button";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const isValidPhone = (str: string) =>
@@ -49,13 +49,13 @@ function CreateOrder() {
       <Form method="POST">
         <div>
           <label>First Name</label>
-          <input type="text" name="customer" required />
+          <input className={inputStyles} type="text" name="customer" required />
         </div>
 
         <div>
           <label>Phone number</label>
           <div>
-            <input type="tel" name="phone" required />
+            <input className={inputStyles} type="tel" name="phone" required />
           </div>
           {formErrors?.phone && <p>{formErrors.phone}</p>}
         </div>
@@ -63,12 +63,13 @@ function CreateOrder() {
         <div>
           <label>Address</label>
           <div>
-            <input type="text" name="address" required />
+            <input className={inputStyles} name="address" required />
           </div>
         </div>
 
         <div>
           <input
+            className="h-6 w-6 accent-yellow-400 focus:outline-none focus:ring focus:ring-yellow-400 focus:ring-offset-2"
             type="checkbox"
             name="priority"
             id="priority"
@@ -80,9 +81,9 @@ function CreateOrder() {
 
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-          <button disabled={isSubmitting}>
+          <Button disabled={isSubmitting}>
             {isSubmitting ? "Placing order..." : "Order now"}
-          </button>
+          </Button>
         </div>
       </Form>
     </div>
