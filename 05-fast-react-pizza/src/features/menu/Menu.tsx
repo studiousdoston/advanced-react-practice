@@ -5,7 +5,6 @@ import { Pizza } from "@/types/cart.types";
 
 function Menu() {
   const menu = useLoaderData() as Pizza[];
-  console.log(menu);
   return (
     <ul>
       {menu.map((pizza: Pizza) => (
