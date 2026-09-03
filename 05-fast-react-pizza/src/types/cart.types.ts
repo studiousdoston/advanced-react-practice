@@ -31,7 +31,8 @@ export interface Order {
   address: string;
   priority: boolean;
   estimatedDelivery: string;
-  cart: Cart;
+  cart: Cart[];
+  status?: string;
   orderPrice: number;
   priorityPrice: number;
 }

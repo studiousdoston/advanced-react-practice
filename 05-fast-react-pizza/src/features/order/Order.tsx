@@ -6,8 +6,9 @@ import { useLoaderData } from "react-router-dom";
 
 function Order() {
   const order = useLoaderData() as Order;
-  
-  const { priority, priorityPrice, orderPrice, estimatedDelivery } = order;
+
+  const { status,  priority, priorityPrice, orderPrice, estimatedDelivery } =
+    order;
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
 
   return (

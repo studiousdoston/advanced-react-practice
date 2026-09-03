@@ -1,8 +1,11 @@
 // https://uibakery.io/regex-library/phone-number
 
+import { pizzaApi } from "@/services/apiRestaurant";
 import { Cart } from "@/types/cart.types";
+import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
 
-const isValidPhone = (str) =>
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const isValidPhone = (str: string) =>
   /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
     str,
   );
@@ -34,13 +37,16 @@ const fakeCart: Cart[] = [
 function CreateOrder() {
   // const [withPriority, setWithPriority] = useState(false);
   const cart = fakeCart;
-  console.log(cart);
+  const navigation = useNavigation();
+  const formErrors = useActionData() as { phone?: string } | undefined;
+  const isSubmitting = navigation.state === "submitting";
 
   return (
     <div>
       <h2>Ready to order? Let's go!</h2>
 
-      <form>
+      {/* <Form method="POST" action="/order/new"> */}
+      <Form method="POST">
         <div>
           <label>First Name</label>
           <input type="text" name="customer" required />
@@ -51,6 +57,7 @@ function CreateOrder() {
           <div>
             <input type="tel" name="phone" required />
           </div>
+          {formErrors?.phone && <p>{formErrors.phone}</p>}
         </div>
 
         <div>
@@ -72,11 +79,48 @@ function CreateOrder() {
         </div>
 
         <div>
-          <button>Order now</button>
+          <input type="hidden" name="cart" value={JSON.stringify(cart)} />
+          <button disabled={isSubmitting}>
+            {isSubmitting ? "Placing order..." : "Order now"}
+          </button>
         </div>
-      </form>
+      </Form>
     </div>
   );
+}
+
+type ActionProps = {
+  request: Request;
+};
+interface FormData {
+  address: string;
+  cart: string;
+  customer: string;
+  phone: string;
+  priority: boolean;
+}
+type Order = Omit<FormData, "cart"> & { cart: Cart[] };
+
+// eslint-disable-next-line react-refresh/only-export-components
+export async function action({ request }: ActionProps) {
+  const formData = await request.formData();
+  const data = Object.fromEntries(formData) as unknown as FormData;
+
+  const order: Order = {
+    ...data,
+    cart: JSON.parse(data.cart),
+    priority: (data.priority as unknown as string) === "on",
+  };
+  console.log(order);
+
+  const errors: { phone?: string } = {};
+  if (!isValidPhone(order.phone))
+    errors.phone =
+      "Invalid phone number entered, please submit your correct phone number";
+  if (Object.keys(errors).length > 0) return errors;
+
+  const newOrder = await pizzaApi.createOrder(order);
+  return redirect(`/order/${newOrder.id}`);
 }
 
 export default CreateOrder;
