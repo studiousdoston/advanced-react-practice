@@ -42,28 +42,42 @@ function CreateOrder() {
   const isSubmitting = navigation.state === "submitting";
 
   return (
-    <div>
-      <h2>Ready to order? Let's go!</h2>
+    <div className="px-4 py-6">
+      <h2 className="mb-8 text-xl font-semibold">Ready to order? Let's go!</h2>
 
       {/* <Form method="POST" action="/order/new"> */}
       <Form method="POST">
-        <div>
-          <label>First Name</label>
-          <input className={inputStyles} type="text" name="customer" required />
+        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+          <label className="sm:basis-40">First Name</label>
+          <input
+            className={`${inputStyles} grow`}
+            type="text"
+            name="customer"
+            required
+          />
         </div>
 
-        <div>
-          <label>Phone number</label>
-          <div>
-            <input className={inputStyles} type="tel" name="phone" required />
+        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+          <label className="sm:basis-40">Phone number</label>
+          <div className="grow">
+            <input
+              className={`${inputStyles} w-full`}
+              type="tel"
+              name="phone"
+              required
+            />
+            {formErrors?.phone && <p>{formErrors.phone}</p>}
           </div>
-          {formErrors?.phone && <p>{formErrors.phone}</p>}
         </div>
 
-        <div>
-          <label>Address</label>
-          <div>
-            <input className={inputStyles} name="address" required />
+        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+          <label className="sm:basis-40">Address</label>
+          <div className="grow">
+            <input
+              className={`${inputStyles} w-full`}
+              name="address"
+              required
+            />
           </div>
         </div>
 
@@ -81,7 +95,7 @@ function CreateOrder() {
 
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-          <Button disabled={isSubmitting}>
+          <Button disabled={isSubmitting} type="primary">
             {isSubmitting ? "Placing order..." : "Order now"}
           </Button>
         </div>
