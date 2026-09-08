@@ -28,7 +28,7 @@ export interface State {
   username: string;
 }
 
-const initialState: State = { username: "Dostonjon" };
+const initialState: State = { username: "" };
 
 const userSlice = createSlice({
   name: "user",

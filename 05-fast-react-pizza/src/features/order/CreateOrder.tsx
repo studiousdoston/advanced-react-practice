@@ -3,6 +3,8 @@ import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
 import { pizzaApi } from "@/services/apiRestaurant";
 import { Cart, inputStyles } from "@/types/types";
 import Button from "@/ui/Button";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const isValidPhone = (str: string) =>
@@ -38,6 +40,7 @@ function CreateOrder() {
   // const [withPriority, setWithPriority] = useState(false);
   const cart = fakeCart;
   const navigation = useNavigation();
+  const username = useSelector((state: RootState) => state.user.username);
   const formErrors = useActionData() as { phone?: string } | undefined;
   const isSubmitting = navigation.state === "submitting";
 
@@ -53,6 +56,7 @@ function CreateOrder() {
             className={`${inputStyles} grow`}
             type="text"
             name="customer"
+            defaultValue={username}
             required
           />
         </div>
