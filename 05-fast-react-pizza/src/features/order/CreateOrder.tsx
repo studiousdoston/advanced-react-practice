@@ -1,10 +1,15 @@
 import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import { pizzaApi } from "@/services/apiRestaurant";
 import { Cart, inputStyles } from "@/types/types";
 import Button from "@/ui/Button";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store";
+
+import store, { RootState } from "@/store";
+import { clearCart, getCart, getTotalCartPrice } from "../cart/cartSlice";
+import EmptyCart from "../cart/EmptyCart";
+import { formatCurrency } from "@/utils/helpers";
+import { useState } from "react";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const isValidPhone = (str: string) =>
@@ -12,38 +17,19 @@ const isValidPhone = (str: string) =>
     str,
   );
 
-const fakeCart: Cart[] = [
-  {
-    pizzaId: 12,
-    name: "Mediterranean",
-    quantity: 2,
-    unitPrice: 16,
-    totalPrice: 32,
-  },
-  {
-    pizzaId: 6,
-    name: "Vegetale",
-    quantity: 1,
-    unitPrice: 13,
-    totalPrice: 13,
-  },
-  {
-    pizzaId: 11,
-    name: "Spinach and Mushroom",
-    quantity: 1,
-    unitPrice: 15,
-    totalPrice: 15,
-  },
-];
-
 function CreateOrder() {
-  // const [withPriority, setWithPriority] = useState(false);
-  const cart = fakeCart;
-  const navigation = useNavigation();
+  const [withPriority, setWithPriority] = useState(false);
+  const cart = useSelector(getCart);
   const username = useSelector((state: RootState) => state.user.username);
+  const totalCartPrice = useSelector(getTotalCartPrice);
+  const navigation = useNavigation();
   const formErrors = useActionData() as { phone?: string } | undefined;
   const isSubmitting = navigation.state === "submitting";
 
+  const priorityPrice = withPriority ? totalCartPrice * 0.2 : 0;
+  const totalPrice = totalCartPrice + priorityPrice;
+
+  if (!cart.length) return <EmptyCart />;
   return (
     <div className="px-4 py-6">
       <h2 className="mb-8 text-xl font-semibold">Ready to order? Let's go!</h2>
@@ -95,8 +81,8 @@ function CreateOrder() {
             type="checkbox"
             name="priority"
             id="priority"
-            // value={withPriority}
-            // onChange={(e) => setWithPriority(e.target.checked)}
+            checked={withPriority}
+            onChange={(e) => setWithPriority(e.target.checked)}
           />
           <label htmlFor="priority" className="font-medium">
             Want to yo give your order priority?
@@ -106,7 +92,9 @@ function CreateOrder() {
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
           <Button disabled={isSubmitting} type="primary">
-            {isSubmitting ? "Placing order..." : "Order now"}
+            {isSubmitting
+              ? "Placing order..."
+              : `Order now from  ${formatCurrency(totalPrice)}`}
           </Button>
         </div>
       </Form>
@@ -134,7 +122,7 @@ export async function action({ request }: ActionProps) {
   const order: Order = {
     ...data,
     cart: JSON.parse(data.cart),
-    priority: (data.priority as unknown as string) === "on",
+    priority: Boolean(formData.get("priority")),
   };
   console.log(order);
 
@@ -145,6 +133,10 @@ export async function action({ request }: ActionProps) {
   if (Object.keys(errors).length > 0) return errors;
 
   const newOrder = await pizzaApi.createOrder(order);
+
+  // DO NOT overuse
+  store.dispatch(clearCart());
+
   return redirect(`/order/${newOrder.id}`);
 }
 
