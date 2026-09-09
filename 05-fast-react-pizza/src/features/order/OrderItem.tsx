@@ -10,8 +10,9 @@ type OrderItemProps = {
   ingredients?: [string];
 };
 
-function OrderItem({ item }: OrderItemProps) {
-  const { quantity, name, totalPrice } = item;
+function OrderItem(orderItemProps: OrderItemProps) {
+  const { quantity, name, totalPrice } = orderItemProps.item;
+  const { isLoadingIngredients, ingredients } = orderItemProps;
 
   return (
     <li className="py-3">
@@ -21,6 +22,9 @@ function OrderItem({ item }: OrderItemProps) {
         </p>
         <p className="font-bold">{formatCurrency(totalPrice)}</p>
       </div>
+      <p className="text-sm capitalize italic text-stone-500">
+        {isLoadingIngredients ? "Loading ..." : ingredients?.join(", ")}
+      </p>
     </li>
   );
 }

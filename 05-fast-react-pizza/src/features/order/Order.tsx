@@ -2,11 +2,19 @@
 import { pizzaApi } from "@/services/apiRestaurant";
 import type { Order } from "@/types/types";
 import { calcMinutesLeft, formatCurrency, formatDate } from "@/utils/helpers";
-import { useLoaderData } from "react-router-dom";
+import { useFetcher, useLoaderData } from "react-router-dom";
 import OrderItem from "./OrderItem";
+import { useEffect } from "react";
+import UpdateOrder from "./UpdateOrder";
 
 function Order() {
   const order = useLoaderData() as Order;
+
+  const fetcher = useFetcher();
+  useEffect(() => {
+    fetcher.load("/menu");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const {
     id,
@@ -49,7 +57,14 @@ function Order() {
 
       <ul className="divide-y divide-stone-200 border-b border-t">
         {cart.map((item) => (
-          <OrderItem item={item} key={item.pizzaId} />
+          <OrderItem
+            item={item}
+            key={item.pizzaId}
+            isLoadingIngredients={fetcher.state === "loading"}
+            ingredients={
+              fetcher?.data?.find((el: { id: number; }) => el.id === item.pizzaId).ingredients
+            }
+          />
         ))}
       </ul>
       <div className="space-y-2 bg-stone-200 px-6 py-5">
@@ -66,6 +81,7 @@ function Order() {
           To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}
         </p>
       </div>
+      {!priority && <UpdateOrder order={order} />}
     </div>
   );
 }

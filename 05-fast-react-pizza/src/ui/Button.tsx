@@ -5,7 +5,7 @@ type ButtonProps = {
   children: React.ReactNode;
   to?: string;
   type?: "primary" | "secondary" | "small" | "round";
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 export default function Button({
