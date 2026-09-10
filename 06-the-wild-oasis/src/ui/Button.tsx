@@ -50,8 +50,9 @@ const variations = {
 };
 
 type ButtonProps = {
-  variation: "primary" | "secondary" | "danger";
-  size: "small" | "medium" | "large";
+  variation?: "primary" | "secondary" | "danger";
+  size?: "small" | "medium" | "large";
+  onClick?: () => void;
 };
 
 const Button = styled.button<ButtonProps>`
@@ -59,8 +60,8 @@ const Button = styled.button<ButtonProps>`
   border-radius: var(--border-radius-sm);
   box-shadow: var(--shadow-sm);
 
-  ${(props) => sizes[props.size]}
-  ${(props) => variations[props.variation]}
+  ${(props) => sizes[props.size ?? "medium"]}
+  ${(props) => variations[props.variation ?? "primary"]}
 `;
 
 Button.defaultProps = {

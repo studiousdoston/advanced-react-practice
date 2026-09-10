@@ -15,10 +15,11 @@ const Container = styled.div`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap:3.2rem
+  gap: 3.2rem;
 `;
 
 const Main = styled.main`
+  overflow: scroll;
   background-color: var(--color-grey-50);
 
   padding: 4rem 4.8rem 6.4rem;
