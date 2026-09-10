@@ -40,16 +40,11 @@ export type CabinData = {
 };
 
 export default function CabinTable() {
-  const {
-    isLoading,
-    data: cabins,
-    error,
-  } = useQuery({
-    queryKey: ["cabin"],
+  const { isLoading, data: cabins } = useQuery({
+    queryKey: ["cabins"],
     queryFn: getCabins,
   });
 
-  console.log(cabins);
   if (isLoading) return <Spinner />;
 
   return (
