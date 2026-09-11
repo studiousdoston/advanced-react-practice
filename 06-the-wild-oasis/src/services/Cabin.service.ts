@@ -4,7 +4,6 @@ import supabase, { supabaseUrl } from "./supabase";
 class CabinService {
   //* -----------  CREATE_CABIN  ----------- *\\
   public async createEditCabin(newCabin: CabinData, id: number) {
-    console.log(newCabin, id);
     const hasImagePath =
       typeof newCabin.image === "string" &&
       newCabin.image.startsWith(supabaseUrl);
@@ -35,9 +34,9 @@ class CabinService {
       throw new Error("Cabin could not be created");
     }
 
+    // 2. Upload image
     if (hasImagePath) return data;
 
-    // 2. Upload image
     const { error: storageError } = await supabase.storage
       .from("cabin-images")
       .upload(imageName, newCabin.image);
