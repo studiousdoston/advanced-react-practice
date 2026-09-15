@@ -66,6 +66,7 @@ export default function CabinRow({ cabin }: Prop) {
     description,
     image,
   } = cabin;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { isCreating, createCabin } = useCreateCabin();
   const { isDeleting, deleteCabin } = useDeleteCabin();
 
@@ -98,7 +99,6 @@ export default function CabinRow({ cabin }: Prop) {
           <Menus.Menu>
             <Menus.Toggle id={String(cabinId)} />
             <Menus.List id={String(cabinId)}>
-              
               <Menus.Button icon={<HiSquare2Stack />} onClick={handleDuplicate}>
                 Duplicate
               </Menus.Button>
@@ -110,7 +110,6 @@ export default function CabinRow({ cabin }: Prop) {
               <Modal.Open opensWindowName="delete">
                 <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
               </Modal.Open>
-
             </Menus.List>
             {/*------------------------------*/}
 

@@ -22,7 +22,6 @@ const StyledModal = styled.div`
   padding: 3.2rem 4rem;
   transition: all 0.5s;
 `;
-
 const Overlay = styled.div`
   position: fixed;
   top: 0;
@@ -34,7 +33,6 @@ const Overlay = styled.div`
   z-index: 1000;
   transition: all 0.5s;
 `;
-
 const Button = styled.button`
   background: none;
   border: none;
@@ -72,6 +70,7 @@ type OpenProps = {
   children: React.ReactElement;
   opensWindowName?: string;
 };
+
 
 const ModalContext = createContext<ModalContextValue>({
   open: () => {},
