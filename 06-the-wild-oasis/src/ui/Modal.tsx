@@ -1,4 +1,15 @@
+import React, {
+  cloneElement,
+  createContext,
+  useContext,
+  useState,
+} from "react";
 import styled from "styled-components";
+import { HiXMark } from "react-icons/hi2";
+import { createPortal } from "react-dom";
+
+import { T } from "../libs/common.type";
+import { useOutsideClick } from "../hooks/useOutsideClick";
 
 const StyledModal = styled.div`
   position: fixed;
@@ -48,3 +59,74 @@ const Button = styled.button`
     color: var(--color-grey-500);
   }
 `;
+
+type ModalContextValue = {
+  open: (name: string) => void;
+  openName: string;
+  close: () => void;
+};
+type ModalProps = {
+  children: React.ReactNode;
+};
+type OpenProps = {
+  children: React.ReactElement;
+  opensWindowName: string;
+};
+
+const ModalContext = createContext<ModalContextValue>({
+  open: () => {},
+  openName: "",
+  close: () => {},
+});
+
+function Modal({ children }: ModalProps) {
+  const [openName, setOpenName] = useState("");
+
+  function close() {
+    return setOpenName("");
+  }
+  function open(name: string) {
+    return setOpenName(name);
+  }
+  return (
+    <ModalContext.Provider value={{ open, openName, close }}>
+      {children}
+    </ModalContext.Provider>
+  );
+}
+
+function Open({ children, opensWindowName }: OpenProps) {
+  const { open } = useContext(ModalContext);
+
+  return cloneElement(children, { onClick: () => open(opensWindowName) });
+  // here cloneElement is being used to attack onClick event to the child element of Open Component
+}
+
+//*--------------------------------------------------
+//                   COMPONENT
+//*--------------------------------------------------
+function Window({ children, name }: T) {
+  const { openName, close } = useContext(ModalContext);
+  const ref = useOutsideClick(close);
+
+  if (name !== openName) return null;
+
+  //*--------------------------------------------------
+  return createPortal(
+    <Overlay>
+      <StyledModal ref={ref}>
+        <Button onClick={close}>
+          <HiXMark />
+        </Button>
+        <div>{cloneElement(children, { onCloseModal: close })}</div>
+        {/* here cloneElement is being used to attach the onCloseModal to the child component of Window Component */}
+      </StyledModal>
+    </Overlay>,
+    document.body,
+  );
+}
+
+Modal.Open = Open;
+Modal.Window = Window;
+
+export default Modal;
