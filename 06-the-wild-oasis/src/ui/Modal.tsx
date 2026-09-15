@@ -70,7 +70,7 @@ type ModalProps = {
 };
 type OpenProps = {
   children: React.ReactElement;
-  opensWindowName: string;
+  opensWindowName?: string;
 };
 
 const ModalContext = createContext<ModalContextValue>({
@@ -98,7 +98,7 @@ function Modal({ children }: ModalProps) {
 function Open({ children, opensWindowName }: OpenProps) {
   const { open } = useContext(ModalContext);
 
-  return cloneElement(children, { onClick: () => open(opensWindowName) });
+  return cloneElement(children, { onClick: () => open(opensWindowName!) });
   // here cloneElement is being used to attack onClick event to the child element of Open Component
 }
 
