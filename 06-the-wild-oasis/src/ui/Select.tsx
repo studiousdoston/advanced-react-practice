@@ -1,11 +1,12 @@
 import styled from "styled-components";
+import { SortOptions } from "../libs/common.type";
 
-const StyledSelect = styled.select`
+const StyledSelect = styled.select<{ $type: string }>`
   font-size: 1.4rem;
   padding: 0.8rem 1.2rem;
   border: 1px solid
     ${(props) =>
-      props.type === "white"
+      props.$type === "white"
         ? "var(--color-grey-100)"
         : "var(--color-grey-300)"};
   border-radius: var(--border-radius-sm);
@@ -13,3 +14,25 @@ const StyledSelect = styled.select`
   font-weight: 500;
   box-shadow: var(--shadow-sm);
 `;
+
+type SelectProps = {
+  options: SortOptions;
+  value: string;
+  type: string;
+  onChange: () => void;
+};
+export default function Select(props: SelectProps) {
+  const { options, value, type, onChange } = props;
+  return (
+    <StyledSelect value={value} $type={type} onChange={onChange}>
+      {options.map((option) => (
+        <option 
+          value={option.value}  
+          key={option.value}
+        >
+          {option.label}
+        </option>
+      ))}
+    </StyledSelect>
+  );
+}

@@ -1,16 +1,14 @@
 import TableOperations from "../../ui/TableOperations";
 import Filter from "../../ui/Filter";
+import SortBy from "../../ui/SortBy";
+import { filterOptions, sortOptions } from "../../libs/utils";
 export default function CabinTableOperations() {
   return (
     <TableOperations>
-      <Filter
-        filterField={"discount"}
-        options={[
-          { value: "all", label: "All" },
-          { value: "no-discount", label: "No Discount" },
-          { value: "with-discount", label: "With Discount" },
-        ]}
-      />
+
+      <Filter filterField={"discount"} options={filterOptions} />
+      <SortBy options={sortOptions} />
+      
     </TableOperations>
   );
 }
