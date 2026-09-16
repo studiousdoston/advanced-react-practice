@@ -18,6 +18,7 @@ class BookingsService {
         { count: "exact" },
       );
 
+
     //* FILTER
     if (filter) query = query.eq(filter!.field, filter!.value);
 
