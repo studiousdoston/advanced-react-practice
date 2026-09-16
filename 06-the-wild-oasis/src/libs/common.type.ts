@@ -9,3 +9,16 @@ export type SortOption = {
 };
 
 export type SortOptions = SortOption[];
+
+export type Booking = {
+  id: string;
+  created_at: Date;
+  startDate: Date;
+  endDate: Date;
+  numNights: number;
+  numGuests: number;
+  totalPrice: number;
+  status: string;
+  guests: { fullName: string; email: string };
+  cabins: { name: string };
+};

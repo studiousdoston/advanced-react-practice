@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import styled from "styled-components";
 import { format, isToday } from "date-fns";
 
@@ -6,6 +7,7 @@ import Table from "../../ui/Table";
 
 import { formatCurrency } from "../../utils/helpers";
 import { formatDistanceFromNow } from "../../utils/helpers";
+import { Booking } from "../../libs/common.type";
 
 const Cabin = styled.div`
   font-size: 1.6rem;
@@ -34,8 +36,8 @@ const Amount = styled.div`
   font-weight: 500;
 `;
 
-function BookingRow({
-  booking: {
+function BookingRow({ booking }: { booking: Booking }) {
+  const {
     id: bookingId,
     created_at,
     startDate,
@@ -46,9 +48,12 @@ function BookingRow({
     status,
     guests: { fullName: guestName, email },
     cabins: { name: cabinName },
-  },
-}) {
-  const statusToTagName = {
+  } = booking;
+
+  const statusToTagName: Record<
+    Booking["status"],
+    "blue" | "green" | "silver"
+  > = {
     unconfirmed: "blue",
     "checked-in": "green",
     "checked-out": "silver",

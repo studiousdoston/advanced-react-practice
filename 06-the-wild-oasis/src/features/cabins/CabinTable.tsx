@@ -4,6 +4,7 @@ import { useGetCabins } from "./useGetCabins";
 import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
 import { useSearchParams } from "react-router-dom";
+import Empty from "../../ui/Empty";
 
 export type CabinData = {
   created_at?: string;
@@ -39,12 +40,13 @@ export default function CabinTable() {
   type SortField = "name" | "regularPrice" | "discount" | "maxCapacity";
   const [field, direction] = sortBy.split("-") as [SortField, "asc" | "desc"];
   const modifier = direction === "asc" ? 1 : -1;
-  
+
   const sortedCabins = [...(filteredCabins ?? [])].sort((a, b) => {
     if (field === "name") return a.name.localeCompare(b.name) * modifier;
     return (a[field] - b[field]) * modifier;
   });
 
+  if (!cabins?.length) return <Empty resource="cabins" />;
   //*--------------------------------------------------
   return (
     <Menus>
