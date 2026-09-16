@@ -1,4 +1,4 @@
-import { SortOption } from "./common.type";
+import { SortOption } from "../libs/common.type";
 
 export const sortOptions: SortOption[] = [
   { value: "name-asc", label: "Sort by name (A-Z)" },
@@ -33,4 +33,5 @@ export const sortBookings = [
   },
   { value: "totalPrice-asc", label: "Sort by amount (low first)" },
 ];
- 
+
+export const PAGE_SIZE = 10;

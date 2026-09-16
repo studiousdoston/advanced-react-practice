@@ -1,7 +1,7 @@
 import SortBy from "../../ui/SortBy";
 import Filter from "../../ui/Filter";
 import TableOperations from "../../ui/TableOperations";
-import { filterBoookings, sortBookings } from "../../libs/utils";
+import { filterBoookings, sortBookings } from "../../utils/constants";
 
 function BookingTableOperations() {
   return (
