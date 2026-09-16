@@ -10,6 +10,17 @@ export type SortOption = {
 
 export type SortOptions = SortOption[];
 
+export type CabinData = {
+  created_at?: string;
+  description: string;
+  discount: number;
+  maxCapacity: number;
+  id?: number;
+  image: string;
+  name: string;
+  regularPrice: number;
+};
+
 export type Booking = {
   id: string;
   created_at: Date;

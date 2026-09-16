@@ -1,8 +1,10 @@
+
+import { CabinData } from "../libs/common.type";
 import { supabaseUrl } from "../services/supabase";
 
 const imageUrl = `${supabaseUrl}/storage/v1/object/public/cabin-images/`;
 
-export const cabins = [
+export const cabins: CabinData[] = [
   {
     name: "001",
     maxCapacity: 2,

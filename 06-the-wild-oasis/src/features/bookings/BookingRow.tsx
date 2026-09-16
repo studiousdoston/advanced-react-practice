@@ -36,6 +36,9 @@ const Amount = styled.div`
   font-weight: 500;
 `;
 
+//*--------------------------------------------------
+//                   COMPONENT
+//*--------------------------------------------------
 function BookingRow({ booking }: { booking: Booking }) {
   const {
     id: bookingId,
@@ -46,9 +49,11 @@ function BookingRow({ booking }: { booking: Booking }) {
     numGuests,
     totalPrice,
     status,
-    guests: { fullName: guestName, email },
+    guests,
     cabins: { name: cabinName },
   } = booking;
+  const guestName = guests?.fullName ?? "Unknown Guest";
+  const email = guests?.email ?? "No email provided";
 
   const statusToTagName: Record<
     Booking["status"],

@@ -67,6 +67,9 @@ type TableProps = {
 
 const TableContext = createContext({ columns: "" });
 
+//*--------------------------------------------------
+//                   COMPONENT
+//*--------------------------------------------------
 function Table({ columns, children }: TableProps) {
   return (
     <TableContext.Provider value={{ columns }}>

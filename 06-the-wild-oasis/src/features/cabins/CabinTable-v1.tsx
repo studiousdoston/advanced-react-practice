@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Spinner from "../../ui/Spinner";
 import CabinRow from "./CabinRow";
 import { useGetCabins } from "./useGetCabins";
+import { CabinData } from "../../libs/common.type";
 
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -25,17 +26,6 @@ const TableHeader = styled.header`
   color: var(--color-grey-600);
   padding: 1.6rem 2.4rem;
 `;
-
-export type CabinData = {
-  created_at?: string;
-  description: string;
-  discount: number;
-  maxCapacity: number;
-  id?: number;
-  image: string;
-  name: string;
-  regularPrice: number;
-};
 
 //*--------------------------------------------------
 //                   COMPONENT

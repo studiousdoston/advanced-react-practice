@@ -5,17 +5,7 @@ import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
 import { useSearchParams } from "react-router-dom";
 import Empty from "../../ui/Empty";
-
-export type CabinData = {
-  created_at?: string;
-  description: string;
-  discount: number;
-  maxCapacity: number;
-  id?: number;
-  image: string;
-  name: string;
-  regularPrice: number;
-};
+import { CabinData } from "../../libs/common.type";
 
 //*--------------------------------------------------
 //                   COMPONENT
