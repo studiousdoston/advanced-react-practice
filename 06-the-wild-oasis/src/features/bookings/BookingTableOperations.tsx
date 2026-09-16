@@ -7,7 +7,6 @@ function BookingTableOperations() {
   return (
     <TableOperations>
       <Filter filterField="status" options={filterBoookings} />
-
       <SortBy options={sortBookings} />
     </TableOperations>
   );

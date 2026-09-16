@@ -35,23 +35,28 @@ const FilterButton = styled.button<{ $active: boolean }>`
     color: var(--color-brand-50);
   }
 `;
+
+//*--------------------------------------------------
+//                   COMPONENT
+//*--------------------------------------------------
 export default function Filter({ filterField, options }: T) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const currentFilter = searchParams.get(filterField) || options.at(0).value;
+  const currentFilter = searchParams.get(filterField) || options[0].value;
+  // HANDLER
   function handleClick(value: string) {
-    searchParams.set("discount", value);
+    searchParams.set(filterField, value);
     setSearchParams(searchParams);
   }
   return (
     <StyledFilter>
-      {options.map((data: T) => (
+      {options.map((option: T) => (
         <FilterButton
-          key={data.value}
-          onClick={() => handleClick(data.value)}
-          $active={data.value === currentFilter}
-          disabled={data.value === currentFilter}
+          key={option.value}
+          onClick={() => handleClick(option.value)}
+          $active={option.value === currentFilter}
+          disabled={option.value === currentFilter}
         >
-          {data.label}
+          {option.label}
         </FilterButton>
       ))}
     </StyledFilter>

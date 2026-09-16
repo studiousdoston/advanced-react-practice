@@ -5,6 +5,10 @@ import Select from "./Select";
 type SortByProps = {
   options: SortOptions;
 };
+
+//*--------------------------------------------------
+//                   COMPONENT
+//*--------------------------------------------------
 export default function SortBy({ options }: SortByProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const sortBy = searchParams.get("sortBy") || "";

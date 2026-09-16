@@ -1,14 +1,30 @@
 import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
 
+type GetBookings = {
+  filter?: { field: string; value: string } | null;
+  sortBy?: { field: string; direction: string };
+};
+
 class BookingsService {
   //* -----------  GET_BOOKINGS  ----------- *\\
-  async getBookings() {
-    const { data, error } = await supabase
+  async getBookings({ filter, sortBy }: GetBookings) {
+    let query = supabase
       .from("bookings")
       .select(
         "id, created_at, startDate, endDate, numNights, numGuests, status, totalPrice, cabins(name), guests(fullName, email)",
       );
+
+    //* FILTER
+    if (filter) query = query.eq(filter!.field, filter!.value);
+
+    //* SORT
+    if (sortBy)
+      query = query.order(sortBy.field, {
+        ascending: sortBy.direction === "asc",
+      });
+    const { data, error } = await query;
+
     if (error) {
       console.error(error);
       throw new Error("Bookings could not be loaded");
@@ -17,7 +33,8 @@ class BookingsService {
     return data;
   }
 
-  async getBooking(id) {
+  //* -----------  GET_BOOKING  ----------- *\\
+  async getBooking(id: string) {
     const { data, error } = await supabase
       .from("bookings")
       .select("*, cabins(*), guests(*)")
@@ -33,7 +50,7 @@ class BookingsService {
   }
 
   // Returns all BOOKINGS created after the given date
-  async getBookingsAfterDate(date) {
+  async getBookingsAfterDate(date: Date) {
     const { data, error } = await supabase
       .from("bookings")
       .select("created_at, totalPrice, extrasPrice")
@@ -49,7 +66,7 @@ class BookingsService {
   }
 
   // Returns all STAYS created after the given date
-  async getStaysAfterDate(date) {
+  async getStaysAfterDate(date: Date) {
     const { data, error } = await supabase
       .from("bookings")
       .select("*, guests(fullName)")
@@ -81,7 +98,7 @@ class BookingsService {
     return data;
   }
 
-  async updateBooking(id, obj) {
+  async updateBooking(id: string, obj: object) {
     const { data, error } = await supabase
       .from("bookings")
       .update(obj)
@@ -96,7 +113,7 @@ class BookingsService {
     return data;
   }
 
-  async deleteBooking(id) {
+  async deleteBooking(id: string) {
     const { data, error } = await supabase
       .from("bookings")
       .delete()

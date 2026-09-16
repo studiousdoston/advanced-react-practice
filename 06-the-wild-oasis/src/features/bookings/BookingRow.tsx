@@ -40,6 +40,7 @@ const Amount = styled.div`
 //                   COMPONENT
 //*--------------------------------------------------
 function BookingRow({ booking }: { booking: Booking }) {
+  
   const {
     id: bookingId,
     created_at,

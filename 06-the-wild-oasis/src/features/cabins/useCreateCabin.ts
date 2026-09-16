@@ -1,7 +1,8 @@
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import cabinService from "../../services/Cabin.service";
-import { CabinData } from "./CabinTable";
+import { CabinData } from "../../libs/common.type";
+
 
 export function useCreateCabin() {
   const queryClient = useQueryClient();
