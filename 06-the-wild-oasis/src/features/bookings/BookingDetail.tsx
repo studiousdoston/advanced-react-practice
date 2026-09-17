@@ -15,6 +15,9 @@ import { Booking } from "../../libs/common.type";
 import { useNavigate } from "react-router-dom";
 import { HiArrowUpOnSquare } from "react-icons/hi2";
 import { useCheckout } from "../check-in-out/useCheckout";
+import { useDelete } from "./useDelete";
+import Modal from "../../ui/Modal";
+import ConfirmDelete from "../../ui/ConfirmDelete";
 
 //*--------------------------------------------------
 //                   COMPONENT
@@ -22,6 +25,7 @@ import { useCheckout } from "../check-in-out/useCheckout";
 function BookingDetail() {
   const { checkout, isCheckingOut } = useCheckout();
   const { booking, isLoading } = useBooking();
+  const { deleteBooking, isDeleting } = useDelete();
   const moveBack = useMoveBack();
   const navigate = useNavigate();
 
@@ -47,6 +51,18 @@ function BookingDetail() {
       <BookingDataBox booking={booking} />
 
       <ButtonGroup>
+        <Modal>
+          <Modal.Open opensWindowName="delete">
+            <Button variation="danger">Delete Booking </Button>
+          </Modal.Open>
+          <Modal.Window name="delete">
+            <ConfirmDelete
+              resourceName="booking"
+              onConfirm={() => deleteBooking(bookingId)}
+              disabled={isDeleting}
+            />
+          </Modal.Window>
+        </Modal>
         {status === "unconfirmed" && (
           <Button onClick={() => navigate(`/checkin/${bookingId}`)}>
             Check in{" "}
@@ -62,6 +78,7 @@ function BookingDetail() {
             Check out{" "}
           </Button>
         )}
+
         <Button variation="secondary" onClick={moveBack}>
           Back
         </Button>
