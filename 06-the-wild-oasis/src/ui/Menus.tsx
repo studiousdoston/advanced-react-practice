@@ -20,6 +20,7 @@ interface ListProps {
 
 interface ButtonProps {
   children: ReactNode;
+  disabled?: boolean;
   icon?: ReactNode;
   onClick?: () => void;
 }

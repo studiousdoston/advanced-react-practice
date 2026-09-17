@@ -45,6 +45,7 @@ export default function Filter({ filterField, options }: T) {
   // HANDLER
   function handleClick(value: string) {
     searchParams.set(filterField, value);
+    if (searchParams.get("page")) searchParams.set("page", "1");
     setSearchParams(searchParams);
   }
   return (
@@ -62,3 +63,4 @@ export default function Filter({ filterField, options }: T) {
     </StyledFilter>
   );
 }
+ 

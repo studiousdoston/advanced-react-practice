@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { ReactElement } from "react";
 import styled, { css } from "styled-components";
 
 const sizes = {
@@ -52,6 +53,7 @@ const variations = {
 type ButtonProps = {
   variation?: "primary" | "secondary" | "danger";
   size?: "small" | "medium" | "large";
+  icon?: ReactElement;
   onClick?: () => void;
 };
 
