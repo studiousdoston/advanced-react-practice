@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { CabinData } from "./CabinTable";
 import { formatCurrency } from "../../utils/helpers";
 import CreateCabinForm from "./CreateCabinForm";
 import { useDeleteCabin } from "./useDeleteCabin";
@@ -9,6 +8,7 @@ import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
+import { CabinData } from "../../libs/common.type";
 
 // const TableRow = styled.div`
 //   display: grid;

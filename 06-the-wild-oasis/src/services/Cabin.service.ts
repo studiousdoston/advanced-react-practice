@@ -1,4 +1,4 @@
-import { CabinData } from "../features/cabins/CabinTable";
+import { CabinData } from "../libs/common.type";
 import supabase, { supabaseUrl } from "./supabase";
 
 class CabinService {
