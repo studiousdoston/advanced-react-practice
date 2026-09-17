@@ -3,14 +3,20 @@ import bookingsService from "../../services/Booking.service";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
+type MutateFn = {
+  bookingId: string;
+  breakfast: object;
+};
+
 export function useCheckin() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { mutate: checkin, isPending: isCheckingIn } = useMutation({
-    mutationFn: (bookingId: string) =>
+    mutationFn: ({ bookingId, breakfast }: MutateFn) =>
       bookingsService.updateBooking(bookingId, {
         status: "checked-in",
         isPaid: true,
+        ...breakfast,
       }),
 
     onSuccess: (data) => {
