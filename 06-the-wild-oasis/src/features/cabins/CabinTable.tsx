@@ -5,7 +5,7 @@ import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
 import { useSearchParams } from "react-router-dom";
 import Empty from "../../ui/Empty";
-import { CabinData } from "../../libs/common.type";
+import { Cabin } from "../../libs/common.type";
 
 //*--------------------------------------------------
 //                   COMPONENT
@@ -53,9 +53,7 @@ export default function CabinTable() {
         <Table.Body
           // data={filteredCabins}
           data={sortedCabins}
-          render={(cabin: CabinData) => (
-            <CabinRow cabin={cabin} key={cabin.id} />
-          )}
+          render={(cabin: Cabin) => <CabinRow cabin={cabin} key={cabin.id} />}
         />
       </Table>
     </Menus>

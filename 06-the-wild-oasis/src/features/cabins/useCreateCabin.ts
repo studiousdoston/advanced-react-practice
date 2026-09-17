@@ -1,14 +1,13 @@
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import cabinService from "../../services/Cabin.service";
-import { CabinData } from "../../libs/common.type";
-
+import { Cabin } from "../../libs/common.type";
 
 export function useCreateCabin() {
   const queryClient = useQueryClient();
 
   const { mutate: createCabin, isPending: isCreating } = useMutation({
-    mutationFn: (data: CabinData) =>
+    mutationFn: (data: Cabin) =>
       cabinService.createEditCabin(data, undefined as unknown as number),
     onSuccess() {
       {

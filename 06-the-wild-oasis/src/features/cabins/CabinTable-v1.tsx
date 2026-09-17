@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Spinner from "../../ui/Spinner";
 import CabinRow from "./CabinRow";
 import { useGetCabins } from "./useGetCabins";
-import { CabinData } from "../../libs/common.type";
+import { Cabin } from "../../libs/common.type";
 
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -46,7 +46,7 @@ export default function CabinTable() {
         <div>discount</div>
         <div></div>
       </TableHeader>
-      {cabins?.map((cabin: CabinData) => (
+      {cabins?.map((cabin: Cabin) => (
         <CabinRow cabin={cabin} key={cabin.id} />
       ))}
     </Table>

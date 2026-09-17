@@ -8,7 +8,7 @@ import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
-import { CabinData } from "../../libs/common.type";
+import { Cabin } from "../../libs/common.type";
 
 // const TableRow = styled.div`
 //   display: grid;
@@ -50,7 +50,7 @@ const Discount = styled.div`
 `;
 
 type Prop = {
-  cabin: CabinData;
+  cabin: Cabin;
 };
 
 //*--------------------------------------------------

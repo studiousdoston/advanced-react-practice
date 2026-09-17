@@ -10,7 +10,7 @@ export type SortOption = {
 
 export type SortOptions = SortOption[];
 
-export type CabinData = {
+export type Cabin = {
   created_at?: string;
   description: string;
   discount: number;
@@ -20,6 +20,16 @@ export type CabinData = {
   name: string;
   regularPrice: number;
 };
+
+export interface Guest {
+  id: number;
+  fullName: string;
+  email: string;
+  nationality: string;
+  countryFlag: string;
+  nationalID: string;
+  created_at: string;
+}
 
 export type Booking = {
   id: string;
@@ -33,3 +43,23 @@ export type Booking = {
   guests: { fullName: string; email: string };
   cabins: { name: string };
 };
+
+export interface BookingFull {
+  id: number;
+  created_at: string;
+  startDate: string;
+  endDate: string;
+  numNights: number;
+  numGuests: number;
+  cabinPrice: number;
+  extrasPrice: number;
+  totalPrice: number;
+  status: "unconfirmed" | "checked-in" | "checked-out";
+  hasBreakfast: boolean;
+  isPaid: boolean;
+  observations: string;
+  cabinId: number;
+  guestId: number;
+  cabins?: Cabin;
+  guests?: Guest;
+}

@@ -1,9 +1,9 @@
-import { CabinData } from "../libs/common.type";
+import { Cabin } from "../libs/common.type";
 import supabase, { supabaseUrl } from "./supabase";
 
 class CabinService {
   //* -----------  CREATE_CABIN  ----------- *\\
-  public async createEditCabin(newCabin: CabinData, id: number) {
+  public async createEditCabin(newCabin: Cabin, id: number) {
     const hasImagePath =
       typeof newCabin.image === "string" &&
       newCabin.image.startsWith(supabaseUrl);
@@ -53,7 +53,7 @@ class CabinService {
   }
 
   //* -----------  GET_CABIN  ----------- *\\
-  public async getCabins(): Promise<CabinData[]> {
+  public async getCabins(): Promise<Cabin[]> {
     const { data, error } = await supabase.from("cabins").select("*");
     if (error) throw error;
     return data ?? [];

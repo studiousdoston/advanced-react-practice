@@ -18,7 +18,6 @@ class BookingsService {
         { count: "exact" },
       );
 
-
     //* FILTER
     if (filter) query = query.eq(filter!.field, filter!.value);
 
@@ -109,6 +108,7 @@ class BookingsService {
     return data;
   }
 
+  //* -----------  UPDATE_BOOKING  ----------- *\\
   async updateBooking(id: string, obj: object) {
     const { data, error } = await supabase
       .from("bookings")
@@ -124,6 +124,7 @@ class BookingsService {
     return data;
   }
 
+  //* -----------  DELETE_BOOKING  ----------- *\\
   async deleteBooking(id: string) {
     const { data, error } = await supabase
       .from("bookings")
