@@ -14,6 +14,7 @@ class AuthService {
     return data;
   }
 
+  //* -------- GET_CURRENT_USER --------
   async getCurrentUser() {
     const { data: session } = await supabase.auth.getSession();
 
@@ -21,10 +22,15 @@ class AuthService {
 
     const { data, error } = await supabase.auth.getUser();
 
-    console.log(data);
     if (error) throw new Error(error.message);
 
     return data?.user;
+  }
+
+  //* -------- LOGOUT --------
+  async logout() {
+    const { error } = await supabase.auth.signOut();
+    if (error) throw new Error(error.message);
   }
 }
 
