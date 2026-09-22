@@ -1,8 +1,25 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { T } from "../libs/common.type";
+import { SignUp, T } from "../libs/common.type";
 import supabase from "./supabase";
 
 class AuthService {
+  //* -------- SIGNUP --------
+  async signup({ fullName, email, password }: SignUp) {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          fullName,
+          avatar: "",
+        },
+      },
+    });
+    if (error) throw new Error(error.message);
+
+    return data;
+  }
+
   //* -------- LOGIN --------
   async login({ email, password }: T) {
     const { data, error } = await supabase.auth.signInWithPassword({

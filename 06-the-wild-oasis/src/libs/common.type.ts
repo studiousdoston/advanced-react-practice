@@ -63,3 +63,9 @@ export interface BookingFull {
   cabins?: Cabin;
   guests?: Guest;
 }
+
+export interface SignUp {
+  fullName: string;
+  password: string;
+  email: string;
+}
