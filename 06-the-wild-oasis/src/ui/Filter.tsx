@@ -2,6 +2,34 @@ import { useSearchParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { T } from "../libs/common.type";
 
+//*--------------------------------------------------
+//                   COMPONENT
+//*--------------------------------------------------
+export default function Filter({ filterField, options }: T) {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentFilter = searchParams.get(filterField) || options[0].value;
+  // HANDLER
+  function handleClick(value: string) {
+    searchParams.set(filterField, value);
+    if (searchParams.get("page")) searchParams.set("page", "1");
+    setSearchParams(searchParams);
+  }
+  return (
+    <StyledFilter>
+      {options.map((option: T) => (
+        <FilterButton
+          key={option.value}
+          onClick={() => handleClick(option.value)}
+          $active={option.value === currentFilter}
+          disabled={option.value === currentFilter}
+        >
+          {option.label}
+        </FilterButton>
+      ))}
+    </StyledFilter>
+  );
+}
+
 const StyledFilter = styled.div`
   border: 1px solid var(--color-grey-100);
   background-color: var(--color-grey-0);
@@ -35,32 +63,3 @@ const FilterButton = styled.button<{ $active: boolean }>`
     color: var(--color-brand-50);
   }
 `;
-
-//*--------------------------------------------------
-//                   COMPONENT
-//*--------------------------------------------------
-export default function Filter({ filterField, options }: T) {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const currentFilter = searchParams.get(filterField) || options[0].value;
-  // HANDLER
-  function handleClick(value: string) {
-    searchParams.set(filterField, value);
-    if (searchParams.get("page")) searchParams.set("page", "1");
-    setSearchParams(searchParams);
-  }
-  return (
-    <StyledFilter>
-      {options.map((option: T) => (
-        <FilterButton
-          key={option.value}
-          onClick={() => handleClick(option.value)}
-          $active={option.value === currentFilter}
-          disabled={option.value === currentFilter}
-        >
-          {option.label}
-        </FilterButton>
-      ))}
-    </StyledFilter>
-  );
-}
- 
