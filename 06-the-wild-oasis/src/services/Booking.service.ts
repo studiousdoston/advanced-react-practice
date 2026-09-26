@@ -59,8 +59,8 @@ class BookingsService {
     return data;
   }
 
-  // Returns all BOOKINGS created after the given date
-  async getBookingsAfterDate(date: Date) {
+  //* -----------  GET_BOOKINGS_AFTER_DATE  ----------- *\\
+  async getBookingsAfterDate(date: string) {
     const { data, error } = await supabase
       .from("bookings")
       .select("created_at, totalPrice, extrasPrice")
@@ -75,8 +75,8 @@ class BookingsService {
     return data;
   }
 
-  // Returns all STAYS created after the given date
-  async getStaysAfterDate(date: Date) {
+  //* -----------  GET_STAYS_AFTER_DATE  ----------- *\\
+  async getStaysAfterDate(date: string) {
     const { data, error } = await supabase
       .from("bookings")
       .select("*, guests(fullName)")
