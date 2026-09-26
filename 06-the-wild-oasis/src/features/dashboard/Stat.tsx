@@ -1,6 +1,13 @@
+import { ReactElement } from "react";
 import styled from "styled-components";
 
-function Stat({ icon, title, value, color }) {
+type StatProps = {
+  title: string;
+  value: number | string;
+  color: string;
+  icon: ReactElement;
+};
+function Stat({ icon, title, value, color }: StatProps) {
   return (
     <StyledStat>
       <Icon color={color}>{icon}</Icon>
@@ -38,15 +45,15 @@ const Icon = styled.div`
   background-color: var(--color-${(props) => props.color}-100);
 
   & svg {
-    width: 3.2rem;
-    height: 3.2rem;
+    width: 4.2rem;
+    height: 4.2rem;
     color: var(--color-${(props) => props.color}-700);
   }
 `;
 
 const Title = styled.h5`
   align-self: end;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   text-transform: uppercase;
   letter-spacing: 0.4px;
   font-weight: 600;
