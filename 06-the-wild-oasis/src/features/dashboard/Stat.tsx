@@ -1,5 +1,17 @@
 import styled from "styled-components";
 
+function Stat({ icon, title, value, color }) {
+  return (
+    <StyledStat>
+      <Icon color={color}>{icon}</Icon>
+      <Title>{title}</Title>
+      <Value>{value}</Value>
+    </StyledStat>
+  );
+}
+
+export default Stat;
+
 const StyledStat = styled.div`
   /* Box */
   background-color: var(--color-grey-0);
@@ -46,15 +58,3 @@ const Value = styled.p`
   line-height: 1;
   font-weight: 500;
 `;
-
-function Stat({ icon, title, value, color }) {
-  return (
-    <StyledStat>
-      <Icon color={color}>{icon}</Icon>
-      <Title>{title}</Title>
-      <Value>{value}</Value>
-    </StyledStat>
-  );
-}
-
-export default Stat;

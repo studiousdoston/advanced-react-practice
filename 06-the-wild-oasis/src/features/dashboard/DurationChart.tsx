@@ -17,8 +17,12 @@ const ChartBox = styled.div`
     font-weight: 600;
   }
 `;
-
-const startDataLight = [
+interface StartData {
+  duration: string;
+  value: number;
+  color: string;
+}
+const startDataLight: StartData[] = [
   {
     duration: "1 night",
     value: 0,
@@ -61,7 +65,7 @@ const startDataLight = [
   },
 ];
 
-const startDataDark = [
+const startDataDark: StartData[] = [
   {
     duration: "1 night",
     value: 0,
@@ -105,13 +109,11 @@ const startDataDark = [
 ];
 
 function prepareData(startData, stays) {
-  // A bit ugly code, but sometimes this is what it takes when working with real data 😅
-
-  function incArrayValue(arr, field) {
+  const incArrayValue = (arr, field) => {
     return arr.map((obj) =>
-      obj.duration === field ? { ...obj, value: obj.value + 1 } : obj
+      obj.duration === field ? { ...obj, value: obj.value + 1 } : obj,
     );
-  }
+  };
 
   const data = stays
     .reduce((arr, cur) => {
