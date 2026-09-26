@@ -3,7 +3,7 @@ import { useUser } from "./useUser";
 
 export default function UserAvatar() {
   const { user } = useUser();
-  console.log(user);
+  // console.log(user);
   const { fullName, avatar } = user?.user_metadata;
   return (
     <StyledUserAvatar>

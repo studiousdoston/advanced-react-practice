@@ -69,3 +69,9 @@ export interface SignUp {
   password: string;
   email: string;
 }
+
+export interface UpdateUser {
+  fullName?: string;
+  password?: string;
+  avatar?: string;
+}
