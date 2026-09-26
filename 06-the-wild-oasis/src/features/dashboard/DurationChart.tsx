@@ -1,22 +1,17 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import styled from "styled-components";
+import Heading from "../../ui/Heading";
+import {
+  Cell,
+  Legend,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+} from "recharts";
+import { useDarkMode } from "../../context/DarkModeContext";
+import { T } from "../../libs/common.type";
 
-const ChartBox = styled.div`
-  /* Box */
-  background-color: var(--color-grey-0);
-  border: 1px solid var(--color-grey-100);
-  border-radius: var(--border-radius-md);
-
-  padding: 2.4rem 3.2rem;
-  grid-column: 3 / span 2;
-
-  & > *:first-child {
-    margin-bottom: 1.6rem;
-  }
-
-  & .recharts-pie-label-text {
-    font-weight: 600;
-  }
-`;
 interface StartData {
   duration: string;
   value: number;
@@ -57,11 +52,6 @@ const startDataLight: StartData[] = [
     duration: "15-21 nights",
     value: 0,
     color: "#3b82f6",
-  },
-  {
-    duration: "21+ nights",
-    value: 0,
-    color: "#a855f7",
   },
 ];
 
@@ -108,27 +98,95 @@ const startDataDark: StartData[] = [
   },
 ];
 
-function prepareData(startData, stays) {
-  const incArrayValue = (arr, field) => {
-    return arr.map((obj) =>
-      obj.duration === field ? { ...obj, value: obj.value + 1 } : obj,
-    );
-  };
-
-  const data = stays
-    .reduce((arr, cur) => {
-      const num = cur.numNights;
-      if (num === 1) return incArrayValue(arr, "1 night");
-      if (num === 2) return incArrayValue(arr, "2 nights");
-      if (num === 3) return incArrayValue(arr, "3 nights");
-      if ([4, 5].includes(num)) return incArrayValue(arr, "4-5 nights");
-      if ([6, 7].includes(num)) return incArrayValue(arr, "6-7 nights");
-      if (num >= 8 && num <= 14) return incArrayValue(arr, "8-14 nights");
-      if (num >= 15 && num <= 21) return incArrayValue(arr, "15-21 nights");
-      if (num >= 21) return incArrayValue(arr, "21+ nights");
-      return arr;
-    }, startData)
-    .filter((obj) => obj.value > 0);
-
-  return data;
+// Step 1: given a number of nights, which bucket does it belong to?
+function getDurationLabel(numNights: number): string {
+  if (numNights === 1) return "1 night";
+  if (numNights === 2) return "2 nights";
+  if (numNights === 3) return "3 nights";
+  if (numNights <= 5) return "4-5 nights";
+  if (numNights <= 7) return "6-7 nights";
+  if (numNights <= 14) return "8-14 nights";
+  if (numNights <= 21) return "15-21 nights";
+  return "21+ nights";
 }
+// Step 2: count how many stays fall into each bucket
+function prepareData(template: StartData[], stays: T[]) {
+  const counts: Record<string, number> = {};
+  
+  stays.forEach((stay: T) => {
+    const label = getDurationLabel(stay.numNights);
+    counts[label] = (counts[label] || 0) + 1;
+  });
+
+  return template
+    .map((bucket) => ({ ...bucket, value: counts[bucket.duration] || 0 }))
+    .filter((bucket) => bucket.value > 0);
+}
+
+function DurationChart({ confirmedStays }: T) {
+  const { isDarkMode } = useDarkMode();
+  const startData = isDarkMode ? startDataDark : startDataLight;
+  const data = prepareData(startData, confirmedStays);
+
+  const backgroundColor = isDarkMode ? "#18212f" : "#fff";
+  const text = isDarkMode ? "#e5e7eb" : "#374151";
+  return (
+    <ChartBox>
+      <Heading as={"h2"}>Stay duration summary</Heading>
+      <ResponsiveContainer width={"100%"} height={270}>
+        <PieChart>
+          <Pie
+            data={data}
+            nameKey={"duration"}
+            dataKey={"value"}
+            innerRadius={85}
+            outerRadius={110}
+            cx={"45%"}
+            cy={"45%"}
+            paddingAngle={5}
+          >
+            {data.map((entry: StartData) => (
+              <Cell
+                fill={entry.color}
+                stroke={entry.color}
+                key={entry.duration}
+              />
+            ))}
+          </Pie>
+          <Tooltip
+            contentStyle={{ backgroundColor: backgroundColor }}
+            labelStyle={{ color: text }}
+            itemStyle={{ color: text }}
+          />
+          <Legend
+            verticalAlign="middle"
+            align="right"
+            layout="vertical"
+            iconSize={16}
+            iconType="circle"
+          />
+        </PieChart>
+      </ResponsiveContainer>
+    </ChartBox>
+  );
+}
+
+export default DurationChart;
+
+const ChartBox = styled.div`
+  /* Box */
+  background-color: var(--color-grey-0);
+  border: 1px solid var(--color-grey-100);
+  border-radius: var(--border-radius-md);
+
+  padding: 2.4rem 3.2rem;
+  grid-column: 3 / span 2;
+
+  & > *:first-child {
+    margin-bottom: 1.6rem;
+  }
+
+  & .recharts-pie-label-text {
+    font-weight: 600;
+  }
+`;
