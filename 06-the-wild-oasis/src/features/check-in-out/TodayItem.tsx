@@ -1,4 +1,38 @@
 import styled from "styled-components";
+import { T } from "../../libs/common.type";
+import Tag from "../../ui/Tag";
+import { Flag } from "../../ui/Flag";
+import Button from "../../ui/Button";
+import { Link } from "react-router-dom";
+import CheckoutButton from "./CheckoutButton";
+
+type Props = {
+  activity: T;
+};
+export default function TodayItem({ activity }: Props) {
+  const { id, status, guests, numNights } = activity;
+  return (
+    <StyledTodayItem>
+      {status === "unconfirmed" && <Tag type="green">Arriving</Tag>}
+      {status === "checked-in" && <Tag type="blue">Departing</Tag>}
+      <Flag src={guests.countryFlag} alt="Flag" />
+      <Guest>{guests.fullName}</Guest>
+      <div>{numNights} nights</div>
+
+      {status === "unconfirmed" && (
+        <Button
+          size="small"
+          variation="primary"
+          as={Link}
+          to={`/checkin/${id}`}
+        >
+          Check in
+        </Button>
+      )}
+      {status === "checked-in" && <CheckoutButton bookingId={id} />}
+    </StyledTodayItem>
+  );
+}
 
 const StyledTodayItem = styled.li`
   display: grid;

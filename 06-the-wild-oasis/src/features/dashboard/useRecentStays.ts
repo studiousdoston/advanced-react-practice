@@ -18,7 +18,7 @@ export function useRecentStays() {
   });
 
   const confirmedStays = stays?.filter(
-    (stay) => stay.status === "checked-in" || "checked-out",
+    (stay) => stay.status === "checked-in" || stay.status === "checked-out",
   );
 
   return { isLoading, stays, confirmedStays, numDays };

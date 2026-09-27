@@ -112,7 +112,7 @@ function getDurationLabel(numNights: number): string {
 // Step 2: count how many stays fall into each bucket
 function prepareData(template: StartData[], stays: T[]) {
   const counts: Record<string, number> = {};
-  
+
   stays.forEach((stay: T) => {
     const label = getDurationLabel(stay.numNights);
     counts[label] = (counts[label] || 0) + 1;
@@ -127,7 +127,7 @@ function DurationChart({ confirmedStays }: T) {
   const { isDarkMode } = useDarkMode();
   const startData = isDarkMode ? startDataDark : startDataLight;
   const data = prepareData(startData, confirmedStays);
-
+  console.log("data", data);
   const backgroundColor = isDarkMode ? "#18212f" : "#fff";
   const text = isDarkMode ? "#e5e7eb" : "#374151";
   return (

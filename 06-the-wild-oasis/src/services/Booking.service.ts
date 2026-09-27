@@ -91,7 +91,7 @@ class BookingsService {
     return data;
   }
 
-  // Activity means there is a check-in or check-out today
+  //* -----------  GET_STAYS_TODAY_ACTIVITY ----------- *\\
   async getStaysTodayActivity() {
     const { data, error } = await supabase
       .from("bookings")
@@ -101,6 +101,11 @@ class BookingsService {
       )
       .order("created_at");
 
+    /*
+    (status = 'unconfirmed' AND startDate = today)
+    OR
+    (status = 'checked-in' AND endDate = today) 
+    */
     if (error) {
       console.error(error);
       throw new Error("Bookings could not get loaded");
