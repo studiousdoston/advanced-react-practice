@@ -5,14 +5,14 @@ import Input from "../../ui/Input";
 import Form from "../../ui/Form";
 import Button from "../../ui/Button";
 import FileInput from "../../ui/FileInput";
-import { CabinData } from "./CabinTable";
-import { T } from "../../libs/common.type";
+
+import { Cabin, T } from "../../libs/common.type";
 import FormRow from "../../ui/FormRow";
 import { useCreateCabin } from "./useCreateCabin";
 import { useEditCabin } from "./useEditCabin";
 
 type FormProps = {
-  cabinToEdit?: CabinData;
+  cabinToEdit?: Cabin;
   onCloseModal?: () => void;
 };
 
@@ -20,7 +20,7 @@ type FormProps = {
 //                   COMPONENT
 //*--------------------------------------------------
 function CreateCabinForm({
-  cabinToEdit = {} as CabinData,
+  cabinToEdit = {} as Cabin,
   onCloseModal,
 }: FormProps) {
   const { id: editId, ...editValues } = cabinToEdit;
@@ -32,7 +32,7 @@ function CreateCabinForm({
 
   //* FORM HOOK
   const { register, handleSubmit, reset, getValues, formState } =
-    useForm<CabinData>({
+    useForm<Cabin>({
       defaultValues: isEditSession ? editValues : {},
     });
   const { errors } = formState;
@@ -40,7 +40,7 @@ function CreateCabinForm({
   const isWorking = isCreating || isEditing;
 
   //* ------------ HANDLERS --------------
-  function onSubmit(data: CabinData) {
+  function onSubmit(data: Cabin) {
     const image = typeof data.image === "string" ? data.image : data.image[0];
     if (editId !== undefined) {
       const newCabinData = { ...data, image };

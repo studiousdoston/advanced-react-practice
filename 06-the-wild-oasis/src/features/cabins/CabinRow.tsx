@@ -67,7 +67,7 @@ export default function CabinRow({ cabin }: Prop) {
     image,
   } = cabin;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { isCreating, createCabin } = useCreateCabin();
+  const { createCabin } = useCreateCabin();
   const { isDeleting, deleteCabin } = useDeleteCabin();
 
   //* ------------ HANDLERS --------------

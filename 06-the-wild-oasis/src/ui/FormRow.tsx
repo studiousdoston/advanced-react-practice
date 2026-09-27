@@ -50,7 +50,15 @@ type FormRowProps = {
 export default function FormRow({ label, error, children }: FormRowProps) {
   return (
     <StyledFormRow>
-      {label && <Label htmlFor={children?.props?.id}>{label}</Label>}
+      {label && (
+        <Label
+          htmlFor={
+            React.isValidElement(children) ? children.props.id : undefined
+          }
+        >
+          {label}
+        </Label>
+      )}
       {children}
       {error && <Error>{error}</Error>}
     </StyledFormRow>

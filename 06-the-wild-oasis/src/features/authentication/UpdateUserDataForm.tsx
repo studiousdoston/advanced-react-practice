@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Button from "../../ui/Button";
 import FileInput from "../../ui/FileInput";
@@ -13,12 +13,18 @@ import { useUpdateUser } from "./useUptadeUser";
 function UpdateUserDataForm() {
   const { updateUser, isUpdating } = useUpdateUser();
   const { user } = useUser();
+  const [fullName, setFullName] = useState("");
+  const [avatar, setAvatar] = useState("");
+
+  useEffect(() => {
+    if (user?.user_metadata?.fullName) {
+      setFullName(user.user_metadata.fullName);
+    }
+  }, [user]);
+  if (!user) return null;
 
   const { email, user_metadata } = user;
   const { fullName: currentFullName } = user_metadata;
-
-  const [fullName, setFullName] = useState(currentFullName);
-  const [avatar, setAvatar] = useState("");
 
   function handleSubmit(e: T) {
     e.preventDefault();

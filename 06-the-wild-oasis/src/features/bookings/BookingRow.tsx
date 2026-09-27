@@ -31,11 +31,9 @@ function BookingRow({ booking }: { booking: Booking }) {
 
   const {
     id: bookingId,
-    created_at,
     startDate,
     endDate,
     numNights,
-    numGuests,
     totalPrice,
     status,
     guests,
@@ -67,7 +65,7 @@ function BookingRow({ booking }: { booking: Booking }) {
           <span>
             {isToday(new Date(startDate))
               ? "Today"
-              : formatDistanceFromNow(startDate)}{" "}
+              : formatDistanceFromNow(new Date(startDate).toISOString())}{" "}
             &rarr; {numNights} night stay
           </span>
           <span>
