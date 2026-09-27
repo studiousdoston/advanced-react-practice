@@ -127,7 +127,7 @@ function DurationChart({ confirmedStays }: T) {
   const { isDarkMode } = useDarkMode();
   const startData = isDarkMode ? startDataDark : startDataLight;
   const data = prepareData(startData, confirmedStays);
-  console.log("data", data);
+
   const backgroundColor = isDarkMode ? "#18212f" : "#fff";
   const text = isDarkMode ? "#e5e7eb" : "#374151";
   return (

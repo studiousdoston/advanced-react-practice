@@ -34,4 +34,4 @@ export const sortBookings = [
   { value: "totalPrice-asc", label: "Sort by amount (low first)" },
 ];
 
-export const PAGE_SIZE = 6;
+export const PAGE_SIZE = 10;
