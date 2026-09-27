@@ -43,4 +43,5 @@ function useDarkMode() {
 }
 // We can get { isDarkMode, toggleDarkMode } from useDarkMode hook as it has been enriched with useContext hook
 
+// eslint-disable-next-line react-refresh/only-export-components
 export { DarkModeProvider, useDarkMode };
