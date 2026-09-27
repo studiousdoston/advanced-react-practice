@@ -1,4 +1,6 @@
-import { T } from "@/app/_lib/types/common";
+export const metadata = {
+  title: "Cabins",
+};
 
 export default function Page() {
   return (
