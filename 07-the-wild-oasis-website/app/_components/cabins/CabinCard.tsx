@@ -1,4 +1,4 @@
-import { Cabin } from "../_lib/types/common";
+import { Cabin } from "../../_lib/types/common";
 
 function CabinCard({ cabin }: { cabin: Cabin }) {
   const { id, name, maxCapacity, regularPrice, discount, image } = cabin;

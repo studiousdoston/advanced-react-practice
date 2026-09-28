@@ -33,5 +33,5 @@ export type Booking = {
   totalPrice: number;
   status: string;
   guests: { fullName: string; email: string };
-  cabins: { name: string };
+  cabins: { name: string; image: string };
 };

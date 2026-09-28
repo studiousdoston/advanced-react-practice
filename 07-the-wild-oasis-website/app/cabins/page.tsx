@@ -1,4 +1,4 @@
-import CabinCard from "../_components/CabinCard";
+import CabinCard from "../_components/cabins/CabinCard";
 import { Cabin } from "../_lib/types/common";
 
 export const metadata = {

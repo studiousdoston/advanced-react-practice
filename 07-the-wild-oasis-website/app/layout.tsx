@@ -2,7 +2,7 @@ import React from "react";
 import { Josefin_Sans } from "next/font/google";
 
 import "./_styles/globals.css";
-import Header from "./_components/Header";
+import Header from "./_components/home/Header";
 
 const josefinFont = Josefin_Sans({
   subsets: ["latin"],
