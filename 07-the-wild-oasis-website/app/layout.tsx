@@ -1,8 +1,14 @@
 import React from "react";
+import { Josefin_Sans } from "next/font/google";
+
 import Navigation from "./_components/Navigation";
 import Logo from "./_components/Logo";
-
 import "./_styles/globals.css";
+
+const josefinFont = Josefin_Sans({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata = {
   title: {
@@ -11,7 +17,6 @@ export const metadata = {
   },
   description:
     "Luxurious cabin hotel, located in the heart of Dagestan Mountains surrounded by beautiful forests and green pastures",
-  
 };
 
 type Props = {
@@ -21,7 +26,9 @@ type Props = {
 export default function RootLayout({ children }: Props) {
   return (
     <html lang="en">
-      <body className="bg-primary-950 text-primary-100 min-h-screen">
+      <body
+        className={`${josefinFont.className} bg-primary-950 text-primary-100 min-h-screen`}
+      >
         <header>
           <Logo />
         </header>
