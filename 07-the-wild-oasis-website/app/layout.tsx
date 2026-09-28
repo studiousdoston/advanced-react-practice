@@ -1,8 +1,6 @@
 import React from "react";
 import { Josefin_Sans } from "next/font/google";
 
-import Navigation from "./_components/Navigation";
-import Logo from "./_components/Logo";
 import "./_styles/globals.css";
 import Header from "./_components/Header";
 
