@@ -14,7 +14,6 @@ class SettingsService {
 
     return data;
   }
- 
 }
 
 export default new SettingsService();
