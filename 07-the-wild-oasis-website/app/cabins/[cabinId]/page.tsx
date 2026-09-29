@@ -1,8 +1,18 @@
 import Image from "next/image";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 
-import { Cabin } from "@/app/_lib/types/common";
+import { Cabin, T } from "@/app/_lib/types/common";
 import cabinService from "@/app/_services/Cabin.service";
+
+// export const metadata = {
+//   title: "Cabin",
+// };
+
+//* GENERATING DYNAMIC METADATA
+export async function generateMetadata({ params }: T) {
+  const cabin = await cabinService.getCabin(params.cabinId);
+  return { title: `Cabin ${cabin.name}` };
+}
 
 type Props = {
   params: { cabinId: string };
