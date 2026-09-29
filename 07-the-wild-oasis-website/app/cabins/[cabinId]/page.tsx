@@ -1,25 +1,34 @@
 import Image from "next/image";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 
-import { Cabin, T } from "@/app/_lib/types/common";
+import { Cabin } from "@/app/_lib/types/common";
 import cabinService from "@/app/_services/Cabin.service";
 
-// export const metadata = {
-//   title: "Cabin",
-// };
+type Props = {
+  params: Promise<{ cabinId: string }>;
+};
 
 //* GENERATING DYNAMIC METADATA
-export async function generateMetadata({ params }: T) {
-  const cabin = await cabinService.getCabin(params.cabinId);
+export async function generateMetadata({ params }: Props) {
+  const { cabinId } = await params;
+  const cabin = await cabinService.getCabin(cabinId);
   return { title: `Cabin ${cabin.name}` };
 }
 
-type Props = {
-  params: { cabinId: string };
+//* MAKE DYNAMIC PAGE STATIC USING generateStaticParams API
+export async function generateStaticParams() {
+  const cabins = await cabinService.getCabins();
+  const ids = cabins.map((cabin: Cabin) => ({ cabinId: String(cabin.id) }));
+  return ids;
+}
+
+type PageProps = {
+  params: Promise<{ cabinId: string }>;
 };
 
-export default async function Page({ params }: Props) {
-  const cabin: Cabin = await cabinService.getCabin(params.cabinId);
+export default async function Page({ params }: PageProps) {
+  const { cabinId } = await params;
+  const cabin: Cabin = await cabinService.getCabin(cabinId);
   const { image, description, name, maxCapacity } = cabin;
 
   return (
