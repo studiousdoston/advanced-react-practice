@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { supabase } from "./supabase";
 
 class CabinService {
@@ -10,6 +11,7 @@ class CabinService {
 
     if (error) {
       console.error(error);
+      notFound();
     }
 
     return data;
