@@ -4,7 +4,6 @@ import cabinService from "@/app/_services/Cabin.service";
 
 export default async function CabinList() {
   const cabins: Cabin[] = await cabinService.getCabins();
-  console.log("CABINS", cabins[0]);
 
   if (!cabins.length) return null;
   return (
