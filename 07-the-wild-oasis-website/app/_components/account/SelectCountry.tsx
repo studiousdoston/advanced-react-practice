@@ -10,8 +10,10 @@ type Props = {
 
 async function SelectCountry({ defaultCountry, name, id, className }: Props) {
   const countries = await guestsService.getCountries();
+  console.log(countries);
   const flag =
-    countries.find((country: T) => country.name === defaultCountry)?.flag ?? "";
+    (await countries.find((country: T) => country.name === defaultCountry)
+      ?.flag) ?? "";
 
   return (
     <select

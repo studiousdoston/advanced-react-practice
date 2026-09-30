@@ -44,11 +44,21 @@ class GuestService {
   async getCountries() {
     try {
       const res = await fetch(
-        "https://restcountries.com/v2/all?fields=name,flag",
+        "https://api.restcountries.com/countries/v5?response_fields=names.common,flag",
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.GET_COUNTRIES_API_KEY}`,
+          },
+        },
       );
-      const countries = await res.json();
-      return countries;
-    } catch {
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! Status: ${res.status}`);
+      }
+
+      const payload = await res.json();
+      return payload.data.objects; // Country array lives in payload.data.objects
+    } catch (error) {
       throw new Error("Could not fetch countries");
     }
   }
