@@ -40,3 +40,9 @@ export interface Country {
   names: { common: string };
   flag: { emoji: string };
 }
+
+export interface User {
+  name: string;
+  email: string;
+  image: string;
+}
