@@ -1,4 +1,4 @@
-import { T } from "@/app/_lib/types/common";
+import { Country } from "@/app/_lib/types/common";
 import guestsService from "@/app/_services/Guests.service";
 
 type Props = {
@@ -10,23 +10,27 @@ type Props = {
 
 async function SelectCountry({ defaultCountry, name, id, className }: Props) {
   const countries = await guestsService.getCountries();
-  console.log(countries);
+  console.log(`\n\n`, countries.length);
   const flag =
-    (await countries.find((country: T) => country.name === defaultCountry)
-      ?.flag) ?? "";
+    (await countries.find(
+      (country: Country) => country.names.common === defaultCountry,
+    )?.flag.emoji) ?? "";
 
   return (
     <select
       name={name}
       id={id}
-      // Here we use a trick to encode BOTH the country name and the flag into the value. Then we split them up again later in the server action
       defaultValue={`${defaultCountry}%${flag}`}
       className={className}
+      key={Math.random()}
     >
       <option value="">Select country...</option>
-      {countries.map((c: T) => (
-        <option key={c.name} value={`${c.name}%${c.flag}`}>
-          {c.name}
+      {countries.map((country: Country) => (
+        <option
+          key={country.names.common}
+          value={`${country.names.common}%${country.flag}`}
+        >
+          {country.names.common}
         </option>
       ))}
     </select>

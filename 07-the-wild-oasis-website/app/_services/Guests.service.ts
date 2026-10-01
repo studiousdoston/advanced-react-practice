@@ -1,3 +1,4 @@
+import { T } from "../_lib/types/common";
 import { supabase } from "./supabase";
 
 class GuestService {
@@ -43,23 +44,38 @@ class GuestService {
 
   async getCountries() {
     try {
-      const res = await fetch(
-        "https://api.restcountries.com/countries/v5?response_fields=names.common,flag",
-        {
-          headers: {
-            Authorization: `Bearer ${process.env.GET_COUNTRIES_API_KEY}`,
-          },
-        },
-      );
+      let allCountries: T = [];
+      let offset = 0;
+      const limit = 100; // Maximum allowed limit on the free plan
+      let hasMore = true;
 
-      if (!res.ok) {
-        throw new Error(`HTTP error! Status: ${res.status}`);
+      while (hasMore) {
+        const res = await fetch(
+          `https://api.restcountries.com/countries/v5?response_fields=names.common,flag&limit=${limit}&offset=${offset}`,
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.GET_COUNTRIES_API_KEY}`,
+            },
+          },
+        );
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+
+        const payload = await res.json();
+        const countries = payload.data.objects || [];
+
+        allCountries = allCountries.concat(countries);
+
+        // Check if more records exist, or increment offset
+        hasMore = payload.data.meta?.more ?? countries.length === limit;
+        offset += limit;
       }
 
-      const payload = await res.json();
-      return payload.data.objects; // Country array lives in payload.data.objects
+      return allCountries;
     } catch (error) {
-      throw new Error("Could not fetch countries");
+      const message = error instanceof Error ? error.message : String(error);
+      throw new Error(`Could not fetch countries: ${message}`);
     }
   }
 }

@@ -35,3 +35,8 @@ export type Booking = {
   guests: { fullName: string; email: string };
   cabins: { name: string; image: string };
 };
+
+export interface Country {
+  names: { common: string };
+  flag: { emoji: string };
+}
