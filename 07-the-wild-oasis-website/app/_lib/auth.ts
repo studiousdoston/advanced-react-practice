@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
+import { T } from "./types/common";
 
 const authConfig = {
   providers: [
@@ -8,6 +9,11 @@ const authConfig = {
       clientSecret: process.env.AUTH_GOOGLE_SECRET || "",
     }),
   ],
+  callbacks: {
+    authorized({ auth }: T) {
+      return !!auth?.user;
+    },
+  },
 };
 
 export const {
