@@ -27,12 +27,8 @@ function DateSelector({ settings, cabin, bookedDates }: T) {
   const numNights = 23;
   const cabinPrice = 23;
   const { discount, regularPrice } = cabin as Cabin;
-  // SETTINGS
   const { minBookingLength, maxBookingLength } = settings;
-  // console.log(minBookingLength, maxBookingLength);
-
   const { range, setRange, resetRange } = useReservation();
-  console.log(range);
 
   return (
     <div className="flex flex-col justify-between h-full">
@@ -81,7 +77,7 @@ function DateSelector({ settings, cabin, bookedDates }: T) {
         {range?.from || range?.to ? (
           <button
             className="border border-primary-800 py-2 px-4 text-sm font-semibold"
-            onClick={() => resetRange(undefined)}
+            onClick={resetRange}
           >
             Clear
           </button>

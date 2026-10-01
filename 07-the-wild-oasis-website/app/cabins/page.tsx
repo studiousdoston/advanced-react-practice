@@ -3,6 +3,7 @@ import CabinList from "../_components/cabins/CabinList";
 import Spinner from "../_components/home/Spinner";
 import { T } from "../_lib/types/common";
 import Filter from "../_components/cabins/Filter";
+import ReservationReminder from "../_components/account/reservations/ReservationReminder";
 
 export const revalidate = 3600;
 
@@ -34,6 +35,7 @@ export default function Page({ searchParams }: T) {
 
       <Suspense fallback={<Spinner />} key={filter}>
         <CabinList filter={filter} />
+        <ReservationReminder />
       </Suspense>
     </div>
   );

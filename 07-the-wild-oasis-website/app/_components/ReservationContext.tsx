@@ -14,7 +14,7 @@ import { DateRange } from "react-day-picker";
 const ReservationContext = createContext<{
   range: DateRange | undefined;
   setRange: Dispatch<SetStateAction<DateRange | undefined>>;
-  resetRange: Dispatch<SetStateAction<undefined>>;
+  resetRange: () => void;
 }>({
   range: undefined,
   setRange: () => undefined,
