@@ -1,8 +1,15 @@
-import { Cabin, T } from "@/app/_lib/types/common";
+"use client";
+import { Cabin } from "@/app/_lib/types/common";
+import { useReservation } from "../ReservationContext";
 
 function ReservationForm({ cabin }: { cabin: Cabin }) {
-  // CHANGE
   const { maxCapacity } = cabin;
+  const { range } = useReservation();
+
+  const selectedDatesText =
+    range?.from && range?.to
+      ? `${range.from.toLocaleDateString()} - ${range.to.toLocaleDateString()}`
+      : "Start by selecting dates";
 
   return (
     <div className="flex flex-col h-full ">
@@ -20,7 +27,7 @@ function ReservationForm({ cabin }: { cabin: Cabin }) {
           <p>{user.name}</p>
         </div> */}
       </div>
-
+      <p>{selectedDatesText}</p>
       <form className="bg-primary-900 py-10 px-16 text-lg flex gap-10 flex-col h-full ">
         <div className="space-y-2">
           <label htmlFor="numGuests">How many guests?</label>
