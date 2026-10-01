@@ -3,7 +3,7 @@ export interface T {
 }
 
 export type Cabin = {
-  id?: number;
+  id?: string;
   created_at?: string;
   description?: string;
   discount: number;
